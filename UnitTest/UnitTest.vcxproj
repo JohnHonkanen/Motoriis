@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{C6BB6FD3-B71B-4E03-940D-1C6E8690F692}</ProjectGuid>
+    <ProjectGuid>{AA7ECE28-B812-4E7E-9634-EE6869C71291}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>UnitTest</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
@@ -158,7 +158,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CsvParse.cpp">
+    <ClCompile Include="CsvParserTest.cpp">
       <SubType>
       </SubType>
     </ClCompile>
