@@ -157,14 +157,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CsvParser.cpp" />
+    <ClCompile Include="Item.cpp" />
+    <ClCompile Include="ItemManager.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Debug\csv\ItemDatabase.csv" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CsvParser.h" />
+    <ClInclude Include="Item.h" />
+    <ClInclude Include="ItemManager.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
