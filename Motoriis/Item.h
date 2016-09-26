@@ -21,6 +21,7 @@ public:
 	void addAmount(int amount);
 	void reduceAmount(int amount);
 	Item *copy();
+	void setAmount(int amount);
 private:
 	int uid, type, amount;
 	string name, sku, color;

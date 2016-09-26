@@ -79,3 +79,7 @@ Item* Item::convertToItem(string itemString) {
 Item* Item::copy() {
 	return new Item(this->uid, this->name, this->type, this->sku, this->color, this->amount);
 }
+
+void Item::setAmount(int amount) {
+	this->amount = amount;
+}

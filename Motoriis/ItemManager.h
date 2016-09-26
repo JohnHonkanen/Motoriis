@@ -17,7 +17,7 @@ public:
 	Item *getItem(string sku);
 	bool canAccept(int systemId);
 
-private:
+protected:
 	vector<Item*> items;
 	vector<int> accept;
 };
