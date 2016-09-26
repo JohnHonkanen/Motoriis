@@ -9,7 +9,7 @@ ItemManager::~ItemManager()
 {
 }
 /*
-	Populate our item list
+	Populate our item list with a CSV itemList
 	@param itemList List of CSV string
 */
 void ItemManager::populateItems(vector<string> itemList){
@@ -29,7 +29,10 @@ bool ItemManager::removeItem(string sku, int amount) {
 	int i = 0;
 	for (it = this->items.begin(); it < this->items.end(); it++, i++) {
 		if (this->items.at(i)->getSKU() == sku) {
-			items.at(i)->reduceAmount(amount);
+			this->items.at(i)->reduceAmount(amount);
+			if (this->items.at(i)->getAmount() == 0) {
+				this->items.erase(it);
+			}
 			return true;
 		}
 	}
@@ -79,18 +82,6 @@ bool ItemManager::findItem(string sku) {
 	return false;
 }
 /*
-	Remove from System's List if exists.
-	@param sku sku identifer of item
-*/
-void ItemManager::removeFromList(string sku) {
-	vector<Item*>::iterator it;
-	int i = 0;
-	for (it = this->items.begin(); it < this->items.end(); it++, i++) {
-		if (this->items.at(i)->getSKU() == sku)
-			items.erase(it);
-	}
-}
-/*
 	Add to the System's List, if already there returns false.
 	@param item Item to add to list
 */
@@ -98,7 +89,7 @@ bool ItemManager::addToList(Item *item) {
 	vector<Item*>::iterator it;
 	int i = 0;
 	for (it = this->items.begin(); it < this->items.end(); it++, i++) {
-		if (this->items.at(i)->getSKU() == item->getSKU) {
+		if (this->items.at(i)->getSKU() == item->getSKU()) {
 			return false;
 		}
 	}

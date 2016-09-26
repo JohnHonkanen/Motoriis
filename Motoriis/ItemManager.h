@@ -13,7 +13,6 @@ public:
 	bool findItem(string sku);
 	bool storeItem(string sku, int amount);
 	bool removeItem(string sku, int amount);
-	void removeFromList(string sku);
 	bool addToList(Item *item);
 	Item *getItem(string sku);
 	bool canAccept(int systemId);

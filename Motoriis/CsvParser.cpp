@@ -29,7 +29,7 @@ vector<string> CsvParser::parseFile(){
 	Checks if our file is open
 */
 bool CsvParser::isOpen() {
-	return(this->file.is_open());
+	return this->file.is_open();
 }
 /*
 	Close our File Access
