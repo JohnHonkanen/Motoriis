@@ -22,7 +22,7 @@ public:
 	void updateOverlay(sf::Vector2f currentPosition);
 	void resetOverlay();
 
-	void eventControler(unsigned int keyInput);
+	void keyboardEvent(unsigned int keyInput);
 private:
 	bool mouseDrag = false;
 	sf::Vector2f startDrag;

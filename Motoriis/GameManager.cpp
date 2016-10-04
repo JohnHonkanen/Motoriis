@@ -111,6 +111,12 @@ void GameManager::processInputs() {
 			playerEvents.resetOverlay();
 		}
 		//EndOfMouse
+
+		//Keyboard
+		if (event.type == sf::Event::KeyPressed) {
+			playerEvents.keyboardEvent(event.key.code);
+		}
+		//EndOfKeyboard
 	}
 }
 

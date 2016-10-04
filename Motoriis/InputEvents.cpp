@@ -53,7 +53,7 @@ void InputEvents::resetOverlay() {
 	overlay = sf::RectangleShape(sf::Vector2f(0,0));
 }
 
-void InputEvents::eventControler(unsigned int keyInput)
+void InputEvents::keyboardEvent(unsigned int keyInput)
 {
 
 	switch (keyInput)
