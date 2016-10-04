@@ -53,21 +53,6 @@ void InputEvents::resetOverlay() {
 	overlay = sf::RectangleShape(sf::Vector2f(0,0));
 }
 
-
-
-#include "InputEvents.h"
-
-
-
-InputEvents::InputEvents()
-{
-}
-
-
-InputEvents::~InputEvents()
-{
-}
-
 void InputEvents::eventControler(unsigned int keyInput)
 {
 
@@ -179,19 +164,3 @@ void InputEvents::eventControler(unsigned int keyInput)
 
 	}
 }
-
-
-//Output text using if else via SFML
-
-/*
-
-if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
-{
-std::cout << "Q" << std::endl;
-}
-else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-std::cout << "A" << std::endl;
-}
-
-
-*/

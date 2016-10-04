@@ -1,6 +1,9 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 
+#include <iostream>
+#include <string>
+
 #pragma once
 class InputEvents
 {
@@ -18,27 +21,12 @@ public:
 	sf::RectangleShape getOverlay();
 	void updateOverlay(sf::Vector2f currentPosition);
 	void resetOverlay();
+
+	void eventControler(unsigned int keyInput);
 private:
 	bool mouseDrag = false;
 	sf::Vector2f startDrag;
 	sf::RectangleShape overlay;
 };
 
-#pragma once
-#include <SFML/Window.hpp>
-#include <iostream>
-#include <SFML/Graphics.hpp>
-#include <string>
-
-class InputEvents
-{
-public:
-	InputEvents();
-	~InputEvents();
-
-	void eventControler(unsigned int keyInput);
-
-	sf::Event event;
-	sf::Window window;
-};
 
