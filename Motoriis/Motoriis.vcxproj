@@ -156,7 +156,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Block.cpp" />
+    <ClCompile Include="Chunk.cpp" />
     <ClCompile Include="CsvParser.cpp" />
+    <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="InputEvents.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="ItemManager.cpp" />
@@ -168,7 +171,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Block.h" />
+    <ClInclude Include="Chunk.h" />
     <ClInclude Include="CsvParser.h" />
+    <ClInclude Include="GameManager.h" />
     <ClInclude Include="InputEvents.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="ItemManager.h" />
