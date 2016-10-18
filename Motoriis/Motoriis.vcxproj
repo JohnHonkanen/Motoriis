@@ -157,6 +157,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Block.cpp" />
+    <ClCompile Include="Building.cpp" />
+    <ClCompile Include="BuildingManager.cpp" />
+    <ClCompile Include="Property.cpp" />
     <ClCompile Include="Chunk.cpp" />
     <ClCompile Include="CsvParser.cpp" />
     <ClCompile Include="GameManager.cpp" />
@@ -166,12 +169,16 @@
     <ClCompile Include="LogisticSystem.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PropertyModifier.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Block.h" />
+    <ClInclude Include="Building.h" />
+    <ClInclude Include="BuildingManager.h" />
+    <ClInclude Include="Property.h" />
     <ClInclude Include="Chunk.h" />
     <ClInclude Include="CsvParser.h" />
     <ClInclude Include="GameManager.h" />
@@ -180,6 +187,7 @@
     <ClInclude Include="ItemManager.h" />
     <ClInclude Include="LogisticSystem.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PropertyModifier.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
