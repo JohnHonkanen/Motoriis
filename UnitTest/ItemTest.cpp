@@ -4,7 +4,7 @@
 #include"../Motoriis/Item.cpp"
 #include "../Motoriis/ItemManager.h"
 #include "../Motoriis/ItemManager.cpp"
-
+#include "../Motoriis/Building.h"
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace UnitTest
@@ -57,5 +57,20 @@ namespace UnitTest
 			bool found = manager.findItem("TE0011");
 			Assert::AreEqual(false, found);
 		}
+
+		TEST_METHOD(AddItemsToBuilding) {
+			string itemString = "1,testItem,0,TE001,#000";
+			Item *item = Item::convertToItem(itemString);
+			Building building = Building(1);
+			Property maxStorage = Property(1, "maxstorage", "maxStorage", "",1.0);
+			Property maxItem = Property(2, "maxitem", "maxitem", "", 1.0);
+			building.addProperty(maxItem);
+			building.addProperty(maxStorage);
+			building.updateLogistics();
+
+			building.logistics.addToList(item);
+			Assert::AreEqual(true, building.logistics.findItem("TE001"));
+		}
 	};
+	
 }

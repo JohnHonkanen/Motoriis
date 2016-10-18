@@ -162,6 +162,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="ItemPropertyTest.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="LogisticSystemTest.cpp">
       <SubType>
       </SubType>

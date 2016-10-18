@@ -8,7 +8,10 @@ InputEvents::InputEvents()
 InputEvents::~InputEvents()
 {
 }
-
+/*
+	Get our mouse event
+	@return	If mouse is clicked or not
+*/
 int InputEvents::mouseEvent() {
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 	{
@@ -17,30 +20,47 @@ int InputEvents::mouseEvent() {
 
 	return 0;
 }
-
+/*
+	Finds our mouse position relative to the window
+	@param *window	Window to check our position to
+*/
 sf::Vector2i InputEvents::mousePosition(sf::RenderWindow *window) {
 	return sf::Mouse::getPosition(*window);
 }
-
+/*
+	Checks if we have if mouse is held
+*/
 bool InputEvents::getMouseDrag() {
 	return this->mouseDrag;
 }
-
+/*
+	Sets our mouse drag
+	@status	True or False
+*/
 void InputEvents::setMouseDrag(bool status) {
 	this->mouseDrag = status;
 }
-
+/*
+	Gets position where we started our drag
+*/
 sf::Vector2f InputEvents::getStartDrag() {
 	return this->startDrag;
 }
+/*
+	Sets position where we start to drag from
+*/
 void InputEvents::setStartDrag(sf::Vector2f position) {
 	this->startDrag = position;
 }
-
+/*
+	Return an overlay based on mouse drag coordinates
+*/
 sf::RectangleShape InputEvents::getOverlay() {
 	return this->overlay;
 }
-
+/*
+	Updates our overlay rectangle shape
+*/
 void InputEvents::updateOverlay(sf::Vector2f currentPosition) {
 	overlay = sf::RectangleShape(currentPosition-this->startDrag);
 	overlay.setFillColor(sf::Color::Transparent);
@@ -48,11 +68,15 @@ void InputEvents::updateOverlay(sf::Vector2f currentPosition) {
 	overlay.setOutlineColor(sf::Color::Red);
 	overlay.setPosition(this->startDrag);
 }
-
+/*
+	Resets our overlay to a 0, 0 value
+*/
 void InputEvents::resetOverlay() {
 	overlay = sf::RectangleShape(sf::Vector2f(0,0));
 }
-
+/*
+	Keyboard control
+*/
 void InputEvents::keyboardEvent(unsigned int keyInput)
 {
 
