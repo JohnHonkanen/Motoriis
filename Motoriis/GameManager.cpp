@@ -18,6 +18,28 @@ bool GameManager::init() {
 	this->window = new sf::RenderWindow(sf::VideoMode(this->windowHeight, this->windowWidth), "Motoriss");
 	this->window->setView(player->getView());
 
+	/*
+		Load up database contents
+		Modifiers
+		Properties
+		Buildings
+	*/
+	this->parser.open("csv/Modifier.csv");
+	vector<string> contents = this->parser.parseFile();
+	this->buildingManager.populateModifiers(contents);
+	this->parser.close();
+
+	this->parser.open("csv/Property.csv");
+	contents = this->parser.parseFile();
+	this->buildingManager.populateProperties(contents);
+	this->parser.close();
+
+	this->parser.open("csv/Building.csv");
+	contents = this->parser.parseFile();
+	this->buildingManager.populateBuildings(contents);
+	this->parser.close();
+
+
 	if (!window)
 		return false;
 	return true;

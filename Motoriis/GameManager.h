@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include "CsvParser.h"
 #include "InputEvents.h"
 #include "Player.h"
 #include "Chunk.h"
@@ -35,5 +36,7 @@ private:
 
 	int snapGrid = 10;
 	int gridOffset = 0;
+
+	CsvParser parser;
 };
 
