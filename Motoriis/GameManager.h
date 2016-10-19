@@ -2,6 +2,7 @@
 #include "InputEvents.h"
 #include "Player.h"
 #include "Chunk.h"
+#include "BuildingManager.h"
 #include <vector>
 #include <iostream>
 
@@ -26,9 +27,11 @@ private:
 	Player *player;
 	vector<Chunk> chunks;
 	InputEvents playerEvents;
+	BuildingManager buildingManager;
 
 	int windowHeight;
 	int windowWidth;
+
 
 	int snapGrid = 10;
 	int gridOffset = 0;

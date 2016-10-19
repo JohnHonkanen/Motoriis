@@ -10,6 +10,8 @@ public:
 	int getUID();
 	float getMultiplier();
 	bool isAdditive() { return this->additive; };
+
+	static Building convertToModifier(string modifierString);
 private:
 	int uid;
 	string identifier;

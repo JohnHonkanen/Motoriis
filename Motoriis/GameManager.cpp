@@ -42,9 +42,11 @@ void GameManager::processInputs() {
 			sf::Vector2i pixelPosition = InputEvents::mousePosition(window);
 			this->mousePos = window->mapPixelToCoords(pixelPosition);
 		}
+		//Update Drag Overlay
 		if (playerEvents.getMouseDrag()) {
 			playerEvents.updateOverlay(mousePos);
 		}
+		//Mouse Click and Release Event
 		if(event.type == sf::Event::MouseButtonPressed && InputEvents::mouseEvent() == 1)
 		{
 			playerEvents.setMouseDrag(true);

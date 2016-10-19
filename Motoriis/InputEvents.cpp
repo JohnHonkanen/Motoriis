@@ -50,7 +50,24 @@ sf::Vector2f InputEvents::getStartDrag() {
 	Sets position where we start to drag from
 */
 void InputEvents::setStartDrag(sf::Vector2f position) {
-	this->startDrag = position;
+	int roundValue = 10;
+	int x = position.x;
+	int y = position.y;
+	int remainX = x % roundValue;
+	int remainY = y % roundValue;
+	float roundX, roundY;
+	//Round X
+	if (remainX != 0)
+		roundX = x - remainX;
+	else
+		roundX = x;
+	//Round Y
+	if (remainY != 0)
+		roundY = y - remainY;
+	else
+		roundY = y;
+
+	this->startDrag = sf::Vector2f(roundX, roundY);
 }
 /*
 	Return an overlay based on mouse drag coordinates
@@ -62,7 +79,24 @@ sf::RectangleShape InputEvents::getOverlay() {
 	Updates our overlay rectangle shape
 */
 void InputEvents::updateOverlay(sf::Vector2f currentPosition) {
-	overlay = sf::RectangleShape(currentPosition-this->startDrag);
+	int roundValue = 10;
+	int x = currentPosition.x;
+	int y = currentPosition.y;
+	int remainX = x % roundValue;
+	int remainY = y % roundValue;
+	float roundX, roundY;
+	//Round X
+	if (remainX != 0)
+		roundX = x + (roundValue - remainX);
+	else
+		roundX = x;
+	//Round Y
+	if (remainY != 0)
+		roundY = y + (roundValue - remainY);
+	else
+		roundY = y;
+
+	overlay = sf::RectangleShape(sf::Vector2f(roundX, roundY)-this->startDrag);
 	overlay.setFillColor(sf::Color::Transparent);
 	overlay.setOutlineThickness(0.5);
 	overlay.setOutlineColor(sf::Color::Red);

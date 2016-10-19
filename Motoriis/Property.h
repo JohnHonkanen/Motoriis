@@ -14,6 +14,8 @@ public:
 	void removeModifier(PropertyModifier modifier);
 	float getFinalValue();
 	string getIdentifier();
+
+	static Property convertToProperty(string propertyString);
 private:
 	int uid;
 	string identifier;
