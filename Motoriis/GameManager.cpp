@@ -16,7 +16,9 @@ bool GameManager::init() {
 	this->player = new Player(this->windowHeight / 2, this->windowWidth / 2);
 	this->chunks.push_back(Chunk(chunkSize, chunkSize, this->windowHeight / 2 - (chunkSize*10)/2, this->windowWidth / 2 - (chunkSize*10)/2));
 	this->window = new sf::RenderWindow(sf::VideoMode(this->windowHeight, this->windowWidth), "Motoriss");
-	this->window->setView(player->getView());
+	this->camera2D = Camera2D(this->windowHeight / 2, this->windowWidth / 2);
+	this->window->setView(view);
+
 
 	if (!window)
 		return false;
@@ -117,8 +119,73 @@ void GameManager::processInputs() {
 		//Keyboard
 		if (event.type == sf::Event::KeyPressed) {
 			playerEvents.keyboardEvent(event.key.code);
+
+			std::cout << event.key.code << endl;
+
+			//Vert
+			if (event.key.code == sf::Keyboard::W) {
+				vert = -1;
+			}
+			else if (event.key.code == sf::Keyboard::S) {
+				vert = 1;
+			}
+
+			//Hori
+			if (event.key.code == sf::Keyboard::A) {
+				hori = -1;
+			}
+			else if (event.key.code == sf::Keyboard::D) {
+				hori = 1;
+			}
 		}
+
+		//do try diagonal
+		else if (event.type == sf::Event::KeyReleased){
+			
+			if (event.key.code == sf::Keyboard::W) {
+				vert = 0;
+			}
+			else if (event.key.code == sf::Keyboard::S) {
+				vert = 0;
+			}
+
+			if (event.key.code == sf::Keyboard::A) {
+				hori = 0;
+			}
+			else if (event.key.code == sf::Keyboard::D) {
+				hori = 0;
+			}
+		}
+		camera2D.moveCamera(hori, vert);
 		//EndOfKeyboard
+
+		//Mouse Wheel Start
+		float zoomX = 40;
+		float zoomY = zoomX/16*9;
+
+		if (event.type == sf::Event::MouseWheelMoved) {
+			// Zoom Out
+			if (event.mouseWheel.delta < 0 && camera2D.view.getSize().x < 450) {
+					camera2D.view.setSize(camera2D.view.getSize().x + zoomX, camera2D.view.getSize().y + zoomY);
+			}
+			//Zoom In
+			else if (event.mouseWheel.delta > 0 && camera2D.view.getSize().x > 100){
+
+					camera2D.view.setSize(camera2D.view.getSize().x - zoomX, camera2D.view.getSize().y - zoomY);
+			}
+			
+			//Zoom to mouse position
+
+			if (camera2D.view.getSize().x < 450 && camera2D.view.getSize().x > 100) {
+				sf::Vector2f currentCenter = camera2D.view.getCenter();
+				sf::Vector2f moveToPos = currentCenter - mousePos;
+
+				int interpolate = 5; //Linear cause bad at maths. 
+
+				camera2D.view.setCenter(currentCenter.x - moveToPos.x / interpolate, currentCenter.y - moveToPos.y / interpolate);
+			}	
+		}
+		//Mouse Wheel End
 	}
 }
 
@@ -135,8 +202,9 @@ void GameManager::mainLoop() {
 
 void GameManager::render() {
 
-	sf::RectangleShape shape(sf::Vector2f(3, 3));
-	shape.setPosition(mousePos.x-1, mousePos.y-1);
+	sf::RectangleShape shape(sf::Vector2f(10, 10));
+	shape.setPosition(InputEvents::roundMousePos(mousePos.x, mousePos.y));
+	window->setView(this->camera2D.view);
 	window->clear();
 	//Render our chunks
 	vector<Chunk>::iterator it;
@@ -147,6 +215,7 @@ void GameManager::render() {
 	if (playerEvents.getMouseDrag()) {
 		window->draw(playerEvents.getOverlay());
 	}
+	
 	//End of Render Chunks
 	window->draw(shape);
 	window->display();

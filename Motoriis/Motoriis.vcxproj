@@ -156,9 +156,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BforBuilding.cpp" />
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="Building.cpp" />
     <ClCompile Include="BuildingManager.cpp" />
+    <ClCompile Include="Camera2D.cpp" />
+    <ClCompile Include="LogisticNetwork.cpp" />
     <ClCompile Include="Property.cpp" />
     <ClCompile Include="Chunk.cpp" />
     <ClCompile Include="CsvParser.cpp" />
@@ -175,9 +178,12 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BforBuilding.h" />
     <ClInclude Include="Block.h" />
     <ClInclude Include="Building.h" />
     <ClInclude Include="BuildingManager.h" />
+    <ClInclude Include="Camera2D.h" />
+    <ClInclude Include="LogisticNetwork.h" />
     <ClInclude Include="Property.h" />
     <ClInclude Include="Chunk.h" />
     <ClInclude Include="CsvParser.h" />
