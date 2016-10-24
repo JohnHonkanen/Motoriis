@@ -40,5 +40,8 @@ private:
 
 	int vert = 0;
 	int hori = 0;
+
+	bool isPanning = false;
+	bool resetMovement = false;
 };
 

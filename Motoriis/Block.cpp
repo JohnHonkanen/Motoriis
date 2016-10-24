@@ -17,9 +17,9 @@ sf::RectangleShape Block::draw() {
 	sf::RectangleShape shape(sf::Vector2f(this->size, this->size));
 	shape.setPosition(x, y);
 	shape.setOutlineThickness(0.3);
-	shape.setOutlineColor(sf::Color::White);
+	shape.setOutlineColor(sf::Color::Color(0, 0, 0,100));
 	if (tile == 0)
-		shape.setFillColor(sf::Color::Black);
+		shape.setFillColor(sf::Color(200, 200, 200, 255));
 	else
 		shape.setFillColor(sf::Color::Blue);
 	return shape;

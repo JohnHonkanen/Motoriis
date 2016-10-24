@@ -13,6 +13,7 @@ public:
 	sf::View getMiniMap();
 	void moveCamera(float x, float y);
 	sf::View view;
+	sf::View mapCenter;
 
 private:
 	int x;
@@ -20,6 +21,7 @@ private:
 
 	float speed = 3;
 	sf::View minimap;
+
 
 
 };
