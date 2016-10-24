@@ -4,6 +4,8 @@
 #include <iostream>
 #include <string>
 
+#include "Player.h"
+
 #pragma once
 class InputEvents
 {
@@ -12,19 +14,22 @@ public:
 	~InputEvents();
 	static int mouseEvent();
 	static sf::Vector2i mousePosition(sf::RenderWindow *window);
+	static sf::Vector2f roundMousePos(int x, int y);
 
 	bool getMouseDrag();
-	void setMouseDrag(bool status);
-
+	
 	sf::Vector2f getStartDrag();
-	void setStartDrag(sf::Vector2f position);
 	sf::RectangleShape getOverlay();
+	void setMouseDrag(bool status);
+	void setStartDrag(sf::Vector2f position);
 	void updateOverlay(sf::Vector2f currentPosition);
 	void resetOverlay();
-
 	void keyboardEvent(unsigned int keyInput);
+
+
 private:
 	bool mouseDrag = false;
+
 	sf::Vector2f startDrag;
 	sf::RectangleShape overlay;
 };
