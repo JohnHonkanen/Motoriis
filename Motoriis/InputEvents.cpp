@@ -97,9 +97,9 @@ void InputEvents::updateOverlay(sf::Vector2f currentPosition) {
 		roundY = y;
 
 	overlay = sf::RectangleShape(sf::Vector2f(roundX, roundY)-this->startDrag);
-	overlay.setFillColor(sf::Color::Transparent);
+	overlay.setFillColor(sf::Color(0, 191, 255, 151));
 	overlay.setOutlineThickness(0.5);
-	overlay.setOutlineColor(sf::Color::Red);
+	overlay.setOutlineColor(sf::Color(0, 0 , 139, 151));
 	overlay.setPosition(this->startDrag);
 }
 /*

@@ -40,10 +40,26 @@ void GameManager::processInputs() {
 			window->close();
 
 		//Mouse Logic
-		if (event.type == sf::Event::MouseMoved) {
+		
 			sf::Vector2i pixelPosition = InputEvents::mousePosition(window);
 			this->mousePos = window->mapPixelToCoords(pixelPosition);
-		}
+
+			if (mousePos.x < 550) {
+				mousePos.x = 550;
+			}
+
+			if (mousePos.x > 1040){
+				mousePos.x = 1040;
+			}
+
+			if (mousePos.y < 205) {
+				mousePos.y = 205;
+			}
+
+			if (mousePos.y > 695) {
+				mousePos.y = 695;
+			}
+		
 		//Update Drag Overlay
 		if (playerEvents.getMouseDrag()) {
 			playerEvents.updateOverlay(mousePos);
@@ -57,7 +73,7 @@ void GameManager::processInputs() {
 		else if(event.type == sf::Event::MouseButtonReleased) {
 			if (playerEvents.getOverlay().getSize().x > 0) {
 				if (playerEvents.getOverlay().getSize().y > 0) {
-					//X and Y positive
+					//X and Y positive Q1
 					for (int startX = playerEvents.getStartDrag().x; startX < mousePos.x + gridOffset; startX += snapGrid) {
 						for (int startY = playerEvents.getStartDrag().y; startY < mousePos.y + gridOffset; startY += snapGrid) {
 							//Update Chunks
@@ -70,7 +86,7 @@ void GameManager::processInputs() {
 					}
 				}
 				else {
-					//X Positive and Y Negative
+					//X Positive and Y Negative Q4
 					for (int startX = playerEvents.getStartDrag().x; startX < mousePos.x; startX += snapGrid) {
 						for (int startY = playerEvents.getStartDrag().y; startY > mousePos.y; startY -= snapGrid) {
 							//Update Chunks
@@ -85,7 +101,7 @@ void GameManager::processInputs() {
 			}
 			else {
 				if (playerEvents.getOverlay().getSize().y > 0) {
-					//X Negative and Y Positive
+					//X Negative and Y Positive Q2
 					for (int startX = playerEvents.getStartDrag().x; startX > mousePos.x; startX -= snapGrid) {
 						for (int startY = playerEvents.getStartDrag().y; startY < mousePos.y; startY += snapGrid) {
 							//Update Chunks
@@ -98,7 +114,7 @@ void GameManager::processInputs() {
 					}
 				}
 				else {
-					//X and Y Negative
+					//X and Y Negative Q3
 					for (int startX = playerEvents.getStartDrag().x; startX > mousePos.x; startX -= snapGrid) {
 						for (int startY = playerEvents.getStartDrag().y; startY > mousePos.y; startY -= snapGrid) {
 							//Update Chunks
@@ -119,12 +135,11 @@ void GameManager::processInputs() {
 		//Keyboard
 		if (event.type == sf::Event::KeyPressed) {
 			playerEvents.keyboardEvent(event.key.code);
-
-			std::cout << event.key.code << endl;
-
+			
 			//Vert
 			if (event.key.code == sf::Keyboard::W) {
 				vert = -1;
+
 			}
 			else if (event.key.code == sf::Keyboard::S) {
 				vert = 1;
@@ -156,8 +171,44 @@ void GameManager::processInputs() {
 				hori = 0;
 			}
 		}
-		camera2D.moveCamera(hori, vert);
 		//EndOfKeyboard
+
+		//Pan Mouse Start
+
+		if (this->mousePos.x < camera2D.getView().getCenter().x - (camera2D.getView().getSize().x / 2) + 60) {
+			hori = -1;
+			isPanning = true;
+			resetMovement = false;
+		}
+		else if (this->mousePos.x > camera2D.getView().getCenter().x + (camera2D.getView().getSize().x / 2) - 60) {
+			hori = 1;
+			isPanning = true;
+			resetMovement = false;
+		}
+		else {
+			isPanning = false;
+		}
+
+		if (this->mousePos.y < camera2D.getView().getCenter().y - (camera2D.getView().getSize().y / 2) + 60) {
+			vert = -1;
+			isPanning = true;
+			resetMovement = false;
+		}
+		else if (this->mousePos.y > camera2D.getView().getCenter().y + (camera2D.getView().getSize().y / 2) - 60) {
+			vert = 1;
+			isPanning = true;
+			resetMovement = false;
+		}
+		else {
+			isPanning = false;
+		}
+
+		if (!resetMovement && !isPanning) {
+			resetMovement = true;
+			hori = 0;
+			vert = 0;
+		}
+		//Pan Mouse End
 
 		//Mouse Wheel Start
 		float zoomX = 40;
@@ -166,12 +217,11 @@ void GameManager::processInputs() {
 		if (event.type == sf::Event::MouseWheelMoved) {
 			// Zoom Out
 			if (event.mouseWheel.delta < 0 && camera2D.view.getSize().x < 450) {
-					camera2D.view.setSize(camera2D.view.getSize().x + zoomX, camera2D.view.getSize().y + zoomY);
+				camera2D.view.setSize(camera2D.view.getSize().x + zoomX, camera2D.view.getSize().y + zoomY);
 			}
 			//Zoom In
 			else if (event.mouseWheel.delta > 0 && camera2D.view.getSize().x > 100){
-
-					camera2D.view.setSize(camera2D.view.getSize().x - zoomX, camera2D.view.getSize().y - zoomY);
+				camera2D.view.setSize(camera2D.view.getSize().x - zoomX, camera2D.view.getSize().y - zoomY);
 			}
 			
 			//Zoom to mouse position
@@ -187,9 +237,13 @@ void GameManager::processInputs() {
 		}
 		//Mouse Wheel End
 	}
+	std::cout << "Camera Center  " << camera2D.getView().getCenter().x - camera2D.getView().getSize().x / 2 + 60 << endl;
+	std::cout << "Mouse Position   " << this->mousePos.x << endl;
+	std::cout << "Horizontal    " << this->hori << endl;
 }
 
 void GameManager::update() {
+	camera2D.moveCamera(hori, vert);
 }
 
 void GameManager::mainLoop() {
@@ -204,6 +258,7 @@ void GameManager::render() {
 
 	sf::RectangleShape shape(sf::Vector2f(10, 10));
 	shape.setPosition(InputEvents::roundMousePos(mousePos.x, mousePos.y));
+	shape.setFillColor(sf::Color(225, 225, 225, 176));
 	window->setView(this->camera2D.view);
 	window->clear();
 	//Render our chunks
