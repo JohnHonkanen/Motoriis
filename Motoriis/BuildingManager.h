@@ -4,6 +4,7 @@
 #include "PropertyModifier.h"
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include <iostream>
 
 class BuildingManager
 {
@@ -19,7 +20,7 @@ public:
 	PropertyModifier findMod(int uid);
 	Building findBuilding(int uid);
 	void drawGUI(sf::RenderWindow *window, sf::View view);
-	int mouseInButton(sf::Vector2f mousepos);
+	Building mouseInButton(sf::Vector2f mousepos, sf::View view);
 
 	bool plotting = false;
 	bool construct = false;
@@ -32,7 +33,5 @@ private:
 
 	float buttonSize = 15.0;
 	float yOffset = 5;
-	sf::RectangleShape pipeButton;
-	sf::RectangleShape storageButton;
 };
 

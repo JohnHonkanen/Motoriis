@@ -9,12 +9,13 @@ Building::Building(int uid)
 
 Building::Building(int uid, string identifier, string name, int type,
 	vector<Property> props, vector<PropertyModifier> mods,
-	vector<int> input, vector<int> output) {
+	vector<int> input, vector<int> output, sf::Color color) {
 	this->uid = uid;
 	this->identifier = identifier;
 	this->name = name;
 	this->type = type;
 	this->properties = props;
+	this->color = color;
 
 	vector<PropertyModifier>::iterator it;
 	int i = 0;

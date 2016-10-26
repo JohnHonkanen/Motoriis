@@ -12,7 +12,7 @@ GameManager::~GameManager()
 }
 
 bool GameManager::init() {
-	int chunkSize = 500;
+	int chunkSize = 150;
 	this->player = new Player(this->windowHeight / 2, this->windowWidth / 2);
 	this->chunks.push_back(Chunk(chunkSize, chunkSize, this->windowHeight / 2 - (chunkSize*10)/2, this->windowWidth / 2 - (chunkSize*10)/2));
 	this->window = new sf::RenderWindow(sf::VideoMode(this->windowHeight, this->windowWidth), "Motoriss");
@@ -40,7 +40,6 @@ bool GameManager::init() {
 	contents = this->parser.parseFile();
 	this->buildingManager.populateBuildings(contents);
 	this->parser.close();
-
 
 	if (!window)
 		return false;
@@ -87,27 +86,33 @@ void GameManager::processInputs() {
 		}
 		//Normal Construction
 		if (playerEvents.getMouseHeld() && this->buildingManager.construct) {
-			cButtons = this->buildingManager.mouseInButton(mousePos);
-			cout << cButtons << endl;
-			if (cButtons == 0) {
-				chunks.at(0).checkBlockAt(sf::Vector2f(mousePos.x, mousePos.y), 1, this->buildingManager.isBuilding);
+			cButtons = this->buildingManager.mouseInButton(mousePos, this->camera2D.getView());
+			if (cButtons.getUid() > 0) {
+				this->onButton = true;
 			}
+			else {
+				this->onButton = false;
+			}
+			cout << this->onButton << endl;
+			if (!this->onButton) {
+				chunks.at(0).checkBlockAt(sf::Vector2f(mousePos.x, mousePos.y), 1, this->buildingManager.isBuilding, this->buildingManager.findBuilding(this->buildingManager.isBuilding));
+			}			
 		}
 		//Mouse Click and Release Event
 		if(event.type == sf::Event::MouseButtonPressed && InputEvents::mouseEvent() == 1)
 		{
 			playerEvents.setMouseHeld(true);
 			//Check if Button is clicked
-			cButtons = this->buildingManager.mouseInButton(mousePos);
-			if (cButtons != 0) {
-				switch (cButtons)
+			cButtons = this->buildingManager.mouseInButton(mousePos, this->camera2D.getView());
+			if (cButtons.getUid() > 0) {
+				switch (cButtons.getType())
 				{
-				case 1:
+				case 2:
 					cout << "Clicked Pipes" << endl;
-					if (!this->buildingManager.construct) {
+					if (!this->buildingManager.construct || this->buildingManager.isBuilding != cButtons.getUid()) {
 						this->buildingManager.construct = true;
 						this->buildingManager.plotting = false;
-						this->buildingManager.isBuilding = 1;
+						this->buildingManager.isBuilding = cButtons.getUid();
 					}
 					else {
 						this->buildingManager.construct = false;
@@ -115,12 +120,12 @@ void GameManager::processInputs() {
 					}
 					
 					break;
-				case 2:
+				case 1: 
 					cout << "Clicked Storage" << endl;
 					if (!this->buildingManager.plotting) {
 						this->buildingManager.construct = false;
 						this->buildingManager.plotting = true;
-						this->buildingManager.isBuilding = 2;
+						this->buildingManager.isBuilding = cButtons.getUid();
 					}
 					else {
 						this->buildingManager.construct = false;
@@ -153,7 +158,7 @@ void GameManager::processInputs() {
 								vector<Chunk>::iterator it;
 								int chunk = 0;
 								for (it = chunks.begin(); it < chunks.end(); it++, chunk++) {
-									chunks.at(chunk).checkBlockAt(sf::Vector2f(startX, startY), 1, this->buildingManager.isBuilding);
+									chunks.at(0).checkBlockAt(sf::Vector2f(startX, startY), 1, this->buildingManager.isBuilding, this->buildingManager.findBuilding(this->buildingManager.isBuilding));
 								}
 							}
 						}
@@ -166,7 +171,7 @@ void GameManager::processInputs() {
 								vector<Chunk>::iterator it;
 								int chunk = 0;
 								for (it = chunks.begin(); it < chunks.end(); it++, chunk++) {
-									chunks.at(chunk).checkBlockAt(sf::Vector2f(startX, startY), 1, this->buildingManager.isBuilding);
+									chunks.at(0).checkBlockAt(sf::Vector2f(startX, startY), 1, this->buildingManager.isBuilding, this->buildingManager.findBuilding(this->buildingManager.isBuilding));
 								}
 							}
 						}
@@ -181,7 +186,7 @@ void GameManager::processInputs() {
 								vector<Chunk>::iterator it;
 								int chunk = 0;
 								for (it = chunks.begin(); it < chunks.end(); it++, chunk++) {
-									chunks.at(chunk).checkBlockAt(sf::Vector2f(startX, startY), 1, this->buildingManager.isBuilding);
+									chunks.at(0).checkBlockAt(sf::Vector2f(startX, startY), 1, this->buildingManager.isBuilding, this->buildingManager.findBuilding(this->buildingManager.isBuilding));
 								}
 							}
 						}
@@ -194,7 +199,7 @@ void GameManager::processInputs() {
 								vector<Chunk>::iterator it;
 								int chunk = 0;
 								for (it = chunks.begin(); it < chunks.end(); it++, chunk++) {
-									chunks.at(chunk).checkBlockAt(sf::Vector2f(startX, startY), 1, this->buildingManager.isBuilding);
+									chunks.at(0).checkBlockAt(sf::Vector2f(startX, startY), 1, this->buildingManager.isBuilding, this->buildingManager.findBuilding(this->buildingManager.isBuilding));
 								}
 							}
 						}
@@ -322,7 +327,6 @@ void GameManager::mainLoop() {
 		this->processInputs();
 		this->update();
 		this->render();
-		cout << mousePos.x << endl;
 	}
 }
 

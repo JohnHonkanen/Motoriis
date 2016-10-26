@@ -12,7 +12,7 @@ public:
 	Block(int x, int y, int tile);
 	~Block();
 	sf::RectangleShape draw();
-	void changeTile(int tile);
+	void changeTile(int tile, Building building);
 	int getTile() { return this->tile; };
 	bool isOccupied() { return this->occupied; };
 	void setOccupied(bool o) { this->occupied = o; };

@@ -45,6 +45,7 @@ private:
 	bool isPanning = false;
 	bool resetMovement = false;
 	CsvParser parser;
-	int cButtons = 0;
+	Building cButtons;
+	bool onButton = false;
 };
 
