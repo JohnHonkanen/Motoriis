@@ -20,8 +20,14 @@ void CsvParser::open(string file) {
 vector<string> CsvParser::parseFile(){
 	string line_;
 	vector<string> fileContents;
+	bool header = true;
 	while (getline(this->file, line_)) {
-		fileContents.insert(fileContents.end(),line_);
+		if (header) {
+			header = false;
+		} else{
+			fileContents.insert(fileContents.end(), line_);
+			cout << line_ << endl;
+		}
 	}
 	return fileContents;
 }

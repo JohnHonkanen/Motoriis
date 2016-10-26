@@ -1,0 +1,4 @@
+UID,identifer,name,desc,multipliyer,additive,affect
+1,store1,Normal Storage,,9,1,1
+2,spd1,Speed,,1.1,0,3
+3,item1,Normal Item,,1,1,2

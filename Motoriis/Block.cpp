@@ -20,11 +20,14 @@ sf::RectangleShape Block::draw() {
 	shape.setOutlineColor(sf::Color::Color(0, 0, 0,100));
 	if (tile == 0)
 		shape.setFillColor(sf::Color(200, 200, 200, 255));
-	else
-		shape.setFillColor(sf::Color::Blue);
+	else {
+		shape.setFillColor(building.getColor());
+	}
 	return shape;
 }
 
-void Block::changeTile(int tile) {
+void Block::changeTile(int tile, Building building) {
 	this->tile = tile;
+	this->building = building;
 }
+
