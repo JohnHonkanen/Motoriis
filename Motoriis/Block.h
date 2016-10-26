@@ -1,5 +1,7 @@
 #include "SFML\Graphics.hpp"
 #include <vector>
+
+#include "Building.h"
 #pragma once
 
 using namespace std;
@@ -11,12 +13,15 @@ public:
 	~Block();
 	sf::RectangleShape draw();
 	void changeTile(int tile);
+	int getTile() { return this->tile; };
 	bool isOccupied() { return this->occupied; };
 	void setOccupied(bool o) { this->occupied = o; };
+	sf::Vector2f getCoords() { return sf::Vector2f(this->x, this->y); };
 private:
 	int x, y;
 	int size;
 	int tile;
 	bool occupied = false;
+	Building building;
 };
 

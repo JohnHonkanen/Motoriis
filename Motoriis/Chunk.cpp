@@ -36,18 +36,23 @@ void Chunk::init() {
 }
 
 void Chunk::render(sf::RenderWindow *window) {
-	for (int x = 0; x < this->chunkWidth; x++) {
-		for (int y = 0; y < this->chunkHeight; y++) {
+	sf::View v = window->getView();
+	float xPoint = v.getCenter().x - v.getSize().x / 2 -10;
+	float maxXPoint = xPoint + v.getSize().x +10;
+	float yPoint = v.getCenter().y - v.getSize().y / 2 -10;
+	float maxYPoint = yPoint + v.getSize().y + 10;
+	for (int x = (xPoint - chunkPositionX) / 10; x < (maxXPoint - chunkPositionX) / 10; x++) {
+		for (int y = (yPoint - chunkPositionY) / 10; y < (maxYPoint - chunkPositionY) / 10; y++) {
 			window->draw(this->Blocks.at(x).at(y)->draw());
 		}
 	}
 }
 
-void Chunk::checkBlockAt(sf::Vector2f position, int mouseEvent) {
+void Chunk::checkBlockAt(sf::Vector2f position, int mouseEvent, int tile) {
 	int xBlock = (position.x - this->chunkPositionX)/10;
 	int yBlock = (position.y - this->chunkPositionY)/10;
 	if (mouseEvent == 1) {
-		Blocks.at(xBlock).at(yBlock)->changeTile(1);
+			Blocks.at(xBlock).at(yBlock)->changeTile(tile);	
 	}
 }
 

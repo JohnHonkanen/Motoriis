@@ -31,7 +31,7 @@ sf::View Camera2D::getMiniMap() {
 }
 
 void Camera2D::moveCamera(float x, float y) {
-	if (this->getView().getCenter().y - this->getView().getSize().y < 90 && y == -1) {
+	/*if (this->getView().getCenter().y - this->getView().getSize().y < 90 && y == -1) {
 		y = 0;
 	}
 
@@ -45,6 +45,6 @@ void Camera2D::moveCamera(float x, float y) {
 
 	if (this->getView().getCenter().x > 851 && x == 1) {
 		x = 0;
-	}
+	}*/
 	this->view.move(x * speed, y * speed);
 }

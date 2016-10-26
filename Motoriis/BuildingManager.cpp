@@ -1,11 +1,8 @@
 #include "BuildingManager.h"
 
-
-
 BuildingManager::BuildingManager()
 {
 }
-
 
 BuildingManager::~BuildingManager()
 {
@@ -128,11 +125,12 @@ void BuildingManager::populateBuildings(vector<string> buildingList) {
 Renders the Building GUI
 */
 void BuildingManager::drawGUI(sf::RenderWindow *window, sf::View view) {
-	float buttonSize = 15.0;
-	float yOffset = 5;
-	sf::RectangleShape pipeButton(sf::Vector2f(buttonSize, buttonSize));
-	sf::RectangleShape storageButton(sf::Vector2f(buttonSize, buttonSize));
 
+	buttonSize = view.getSize().x / 30;
+	yOffset = view.getSize().y * 0.01;
+
+	pipeButton = sf::RectangleShape(sf::Vector2f(buttonSize, buttonSize));
+	storageButton = sf::RectangleShape(sf::Vector2f(buttonSize, buttonSize ));
 	pipeButton.setPosition(view.getCenter().x - view.getSize().x/2 + buttonSize, view.getCenter().y + view.getSize().y/2 - buttonSize - yOffset);
 	pipeButton.setOutlineThickness(0.1);
 	pipeButton.setFillColor(sf::Color(200, 0, 0, 255));
@@ -142,4 +140,20 @@ void BuildingManager::drawGUI(sf::RenderWindow *window, sf::View view) {
 	storageButton.setFillColor(sf::Color(0, 200, 0, 255));
 	window->draw(pipeButton);
 	window->draw(storageButton);
+}
+
+int BuildingManager::mouseInButton(sf::Vector2f mousepos) {
+	if (mousepos.x > pipeButton.getPosition().x && mousepos.x < pipeButton.getPosition().x + pipeButton.getSize().x) {
+		if (mousepos.y > pipeButton.getPosition().y && mousepos.y < pipeButton.getPosition().y + pipeButton.getSize().y) {
+			return 1;
+		}
+	}
+
+	if (mousepos.x > storageButton.getPosition().x && mousepos.x < storageButton.getPosition().x + storageButton.getSize().x) {
+		if (mousepos.y > storageButton.getPosition().y && mousepos.y < storageButton.getPosition().y + storageButton.getSize().y) {
+			return 2;
+		}
+	}
+
+	return 0;
 }
