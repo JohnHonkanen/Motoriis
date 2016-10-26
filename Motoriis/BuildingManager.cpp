@@ -123,3 +123,23 @@ void BuildingManager::populateBuildings(vector<string> buildingList) {
 		this->buildings.push_back(BuildingManager::convertToBuilding(buildingList.at(i)));
 	}
 }
+
+/*
+Renders the Building GUI
+*/
+void BuildingManager::drawGUI(sf::RenderWindow *window, sf::View view) {
+	float buttonSize = 15.0;
+	float yOffset = 5;
+	sf::RectangleShape pipeButton(sf::Vector2f(buttonSize, buttonSize));
+	sf::RectangleShape storageButton(sf::Vector2f(buttonSize, buttonSize));
+
+	pipeButton.setPosition(view.getCenter().x - view.getSize().x/2 + buttonSize, view.getCenter().y + view.getSize().y/2 - buttonSize - yOffset);
+	pipeButton.setOutlineThickness(0.1);
+	pipeButton.setFillColor(sf::Color(200, 0, 0, 255));
+
+	storageButton.setPosition(view.getCenter().x - view.getSize().x / 2 + buttonSize + (buttonSize*1.5), view.getCenter().y + view.getSize().y / 2 - buttonSize - yOffset);
+	storageButton.setOutlineThickness(0.1);
+	storageButton.setFillColor(sf::Color(0, 200, 0, 255));
+	window->draw(pipeButton);
+	window->draw(storageButton);
+}

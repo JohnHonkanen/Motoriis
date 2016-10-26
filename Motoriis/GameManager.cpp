@@ -171,5 +171,7 @@ void GameManager::render() {
 	}
 	//End of Render Chunks
 	window->draw(shape);
+	//Render GUI
+	buildingManager.drawGUI(window, player->getView());
 	window->display();
 }

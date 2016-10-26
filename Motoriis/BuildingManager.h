@@ -2,7 +2,7 @@
 #include "Building.h"
 #include "Property.h"
 #include "PropertyModifier.h"
-
+#include <SFML/Graphics.hpp>
 #include <vector>
 
 class BuildingManager
@@ -18,6 +18,7 @@ public:
 	Property findProperty(int uid);
 	PropertyModifier findMod(int uid);
 	Building findBuilding(int uid);
+	void drawGUI(sf::RenderWindow *window, sf::View view);
 
 private:
 	vector<PropertyModifier> modifiers;
