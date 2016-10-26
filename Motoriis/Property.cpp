@@ -1,7 +1,7 @@
 #include "Property.h"
 
 
-
+Property::Property() { }
 Property::Property(int uid, string identifer, string name, string description, float base)
 {
 	this->uid = uid;
@@ -59,4 +59,16 @@ float Property::getFinalValue() {
 
 string Property::getIdentifier() {
 	return this->identifier;
+}
+
+Property Property::convertToProperty(string propertyString) {
+	string prop[5];
+	stringstream ss(propertyString);
+	string token;
+	int i = 0;
+	while (getline(ss, token, ',')) {
+		prop[i] = token;
+		i++;
+	}
+	return Property(stoi(prop[0]), prop[1], prop[2], prop[3], stof(prop[4]));
 }

@@ -6,6 +6,7 @@
 #include <vector>
 #include <iostream>
 #include "Camera2D.h"
+#include "CsvParser.h"
 
 using namespace std;
 #pragma once
@@ -43,5 +44,8 @@ private:
 
 	bool isPanning = false;
 	bool resetMovement = false;
+	CsvParser parser;
+	Building cButtons;
+	bool onButton = false;
 };
 
