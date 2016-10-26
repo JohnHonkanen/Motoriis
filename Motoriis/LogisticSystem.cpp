@@ -1,6 +1,7 @@
 #include "LogisticSystem.h"
 
 LogisticSystem::LogisticSystem(){}
+
 LogisticSystem::LogisticSystem(int ID, int maxItems, int maxStorage)
 {
 	this->maxItems = maxItems;
