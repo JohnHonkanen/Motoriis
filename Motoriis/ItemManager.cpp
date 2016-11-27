@@ -17,7 +17,7 @@ void ItemManager::populateItems(vector<string> itemList){
 	vector<string>::iterator it;
 	int i = 0;
 	for (it = itemList.begin(); it < itemList.end(); it++, i++) {
-		this->items.push_back(Item::convertToItem(itemList.at(i)));
+		//this->items.push_back(Item::convertToItem(itemList.at(i)));
 	}
 }
 /*

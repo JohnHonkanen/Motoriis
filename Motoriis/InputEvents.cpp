@@ -17,6 +17,9 @@ int InputEvents::mouseEvent() {
 	{
 		return 1;
 	}
+	else if(sf::Mouse::isButtonPressed(sf::Mouse::Right)) {
+		return 2;
+	}
 
 	return 0;
 }

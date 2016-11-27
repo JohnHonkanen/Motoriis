@@ -1,3 +1,4 @@
+#include "SFML\Graphics\Color.hpp"
 #include<string>
 #include<vector>
 #include <sstream>
@@ -9,21 +10,20 @@ class Item
 {
 public:
 	Item();
-	Item(int uid, string name, int type, string sku, string color);
-	Item(int uid, string name, int type, string sku, string color, int amount);
+	Item(int uid, string name, int type, string sku, sf::Color color);
 	~Item();
 	string getName();
 	int getType();
 	string getSKU();
-	string getColor();
-	static Item* convertToItem(string itemString);
+	sf::Color getColor();
+	int getUID() { return this->uid; };
 	int getAmount();
 	void addAmount(int amount);
 	void reduceAmount(int amount);
-	Item *copy();
 	void setAmount(int amount);
 private:
 	int uid, type, amount;
-	string name, sku, color;
+	string name, sku;
+	sf::Color color;
 };
 
