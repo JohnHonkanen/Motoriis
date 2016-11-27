@@ -3,7 +3,7 @@
 Item::Item() {
 
 }
-Item::Item(int uid, string name, int type, string sku, string color)
+Item::Item(int uid, string name, int type, string sku, sf::Color color)
 {
 	this->uid = uid;
 	this->name = name;
@@ -11,15 +11,6 @@ Item::Item(int uid, string name, int type, string sku, string color)
 	this->sku = sku;
 	this->color = color;
 	this->amount = 0;
-}
-Item::Item(int uid, string name, int type, string sku, string color, int amount)
-{
-	this->uid = uid;
-	this->name = name;
-	this->type = type;
-	this->sku = sku;
-	this->color = color;
-	this->amount = amount;
 }
 
 
@@ -38,7 +29,7 @@ string Item::getSKU() {
 	return this->sku;
 }
 
-string Item::getColor(){
+sf::Color Item::getColor(){
 	return this->color;
 }
 
@@ -58,26 +49,6 @@ void Item::addAmount(int amount) {
 */
 void Item::reduceAmount(int amount) {
 	this->amount -= amount;
-}
-/*
-	Change CSV string into an Item datatype
-*/
-Item* Item::convertToItem(string itemString) {
-	string itemProp[5];
-	stringstream ss(itemString);
-	string token;
-	int i = 0;
-	while (getline(ss, token, ',')) {
-		itemProp[i] = token;
-		i++;
-	}
-	return new Item(stoi(itemProp[0]), itemProp[1], stoi(itemProp[2]), itemProp[3], itemProp[4]);
-}
-/*
-	Create a new instance of this item
-*/
-Item* Item::copy() {
-	return new Item(this->uid, this->name, this->type, this->sku, this->color, this->amount);
 }
 
 void Item::setAmount(int amount) {

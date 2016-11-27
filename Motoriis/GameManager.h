@@ -1,10 +1,11 @@
+#include <vector>
+#include <iostream>
 #include <SFML/Graphics.hpp>
 #include "InputEvents.h"
 #include "Player.h"
 #include "Chunk.h"
-#include "BuildingManager.h"
-#include <vector>
-#include <iostream>
+#include "ConstructManager.h"
+#include "MenuManager.h"
 #include "Camera2D.h"
 #include "CsvParser.h"
 
@@ -31,7 +32,8 @@ private:
 	Camera2D camera2D;
 	vector<Chunk> chunks;
 	InputEvents playerEvents;
-	BuildingManager buildingManager;
+	ConstructManager constructManager;
+	MenuManager menuManager;
 
 	int windowHeight;
 	int windowWidth;
@@ -45,7 +47,6 @@ private:
 	bool isPanning = false;
 	bool resetMovement = false;
 	CsvParser parser;
-	Building cButtons;
 	bool onButton = false;
 };
 

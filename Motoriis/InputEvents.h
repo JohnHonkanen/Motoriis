@@ -24,6 +24,10 @@ public:
 	void setMouseHeld(bool status) { this->mouseHeld = status; };
 	bool getMouseHeld() { return this->mouseHeld; };
 	void setMouseDrag(bool status);
+
+	void setMouseRightHeld(bool status) { this->mouseRightHeld = status; };
+	bool getMouseRightHeld() { return this->mouseRightHeld; };
+
 	void setStartDrag(sf::Vector2f position);
 	void updateOverlay(sf::Vector2f currentPosition);
 	void resetOverlay();
@@ -33,6 +37,9 @@ public:
 private:
 	bool mouseHeld = false;
 	bool mouseDrag = false;
+
+	bool mouseRightHeld = false;
+	bool mouseRightDrag = false;
 
 	sf::Vector2f startDrag;
 	sf::RectangleShape overlay;
