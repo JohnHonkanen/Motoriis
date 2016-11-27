@@ -19,28 +19,18 @@ bool GameManager::init() {
 	this->camera2D = Camera2D(this->windowHeight / 2, this->windowWidth / 2);
 	this->window->setView(view);
 
-
-	/*
-		Load up database contents
-		Modifiers
-		Properties
-		Buildings
-	*/
-	this->parser.open("csv/Modifier.csv");
-	vector<string> contents = this->parser.parseFile();
-	this->buildingManager.populateModifiers(contents);
-	this->parser.close();
-
-	this->parser.open("csv/Property.csv");
-	contents = this->parser.parseFile();
-	this->buildingManager.populateProperties(contents);
-	this->parser.close();
-
-	this->parser.open("csv/Building.csv");
-	contents = this->parser.parseFile();
-	this->buildingManager.populateBuildings(contents);
-	this->parser.close();
-
+	Item blue =  Item(1, "Blueberry", 0, "BLU0", sf::Color(122,0,168));
+	Item milk =  Item(2, "Milk", 0, "MLK0", sf::Color(220, 217, 205));
+	
+	Construct* outputBlue = new OutputConstruct(InputEvents::roundMousePos(800, 400));
+	outputBlue->addItem(blue);
+	Construct* outputMilk = new OutputConstruct(InputEvents::roundMousePos(800, 420));
+	outputMilk->setFlow(5);
+	outputMilk->addItem(milk);
+	this->constructManager.addToList(outputBlue);
+	this->constructManager.addToList(outputMilk);
+	this->constructManager.addNetwork(outputBlue);
+	this->constructManager.addNetwork(outputMilk);
 	if (!window)
 		return false;
 	return true;
@@ -64,150 +54,43 @@ void GameManager::processInputs() {
 		
 		sf::Vector2i pixelPosition = InputEvents::mousePosition(window);
 		this->mousePos = window->mapPixelToCoords(pixelPosition);
+		sf::Vector2f roundedPos = InputEvents::roundMousePos(mousePos.x, mousePos.y);
 
-		/*if (mousePos.x < 550) {
-			mousePos.x = 550;
-		}
-
-		if (mousePos.x > 1040){
-			mousePos.x = 1040;
-		}
-
-		if (mousePos.y < 205) {
-			mousePos.y = 205;
-		}
-
-		if (mousePos.y > 695) {
-			mousePos.y = 695;
-		}*/
 		//Update Drag Overlay
 		if (playerEvents.getMouseDrag()) {
 			playerEvents.updateOverlay(mousePos);
 		}
 		//Normal Construction
-		if (playerEvents.getMouseHeld() && this->buildingManager.construct) {
-			cButtons = this->buildingManager.mouseInButton(mousePos, this->camera2D.getView());
-			if (cButtons.getUid() > 0) {
-				this->onButton = true;
+		if (playerEvents.getMouseHeld()) {
+			if (this->constructManager.checkPosition(roundedPos) == NULL) {
+				Construct* newPipe = new Pipe(roundedPos);
+				this->constructManager.addToList(newPipe);
 			}
-			else {
-				this->onButton = false;
+
+		}
+		else if (playerEvents.getMouseRightHeld()) {
+			if (this->constructManager.checkPosition(roundedPos) != NULL) {
+				this->constructManager.removeLink();
 			}
-			cout << this->onButton << endl;
-			if (!this->onButton) {
-				chunks.at(0).checkBlockAt(sf::Vector2f(mousePos.x, mousePos.y), 1, this->buildingManager.isBuilding, this->buildingManager.findBuilding(this->buildingManager.isBuilding));
-			}			
 		}
 		//Mouse Click and Release Event
 		if(event.type == sf::Event::MouseButtonPressed && InputEvents::mouseEvent() == 1)
 		{
 			playerEvents.setMouseHeld(true);
-			//Check if Button is clicked
-			cButtons = this->buildingManager.mouseInButton(mousePos, this->camera2D.getView());
-			if (cButtons.getUid() > 0) {
-				switch (cButtons.getType())
-				{
-				case 2:
-					cout << "Clicked Pipes" << endl;
-					if (!this->buildingManager.construct || this->buildingManager.isBuilding != cButtons.getUid()) {
-						this->buildingManager.construct = true;
-						this->buildingManager.plotting = false;
-						this->buildingManager.isBuilding = cButtons.getUid();
-					}
-					else {
-						this->buildingManager.construct = false;
-						this->buildingManager.plotting = false;
-					}
-					
-					break;
-				case 1: 
-					cout << "Clicked Storage" << endl;
-					if (!this->buildingManager.plotting) {
-						this->buildingManager.construct = false;
-						this->buildingManager.plotting = true;
-						this->buildingManager.isBuilding = cButtons.getUid();
-					}
-					else {
-						this->buildingManager.construct = false;
-						this->buildingManager.plotting = false;
-					}
-					break;
-				default:
-					break;
-				}
-			}
-			else {
-				//Do default
-				if (this->buildingManager.construct || this->buildingManager.plotting) {
-					if (this->buildingManager.plotting) {
-						playerEvents.setMouseDrag(true);
-						playerEvents.setStartDrag(mousePos);
-					}
-				}
-			}
 		}
 		else if(event.type == sf::Event::MouseButtonReleased) {
 			playerEvents.setMouseHeld(false);
-			if (this->buildingManager.plotting) {
-				if (playerEvents.getOverlay().getSize().x > 0) {
-					if (playerEvents.getOverlay().getSize().y > 0) {
-						//X and Y positive Q1
-						for (int startX = playerEvents.getStartDrag().x; startX < mousePos.x + gridOffset; startX += snapGrid) {
-							for (int startY = playerEvents.getStartDrag().y; startY < mousePos.y + gridOffset; startY += snapGrid) {
-								//Update Chunks
-								vector<Chunk>::iterator it;
-								int chunk = 0;
-								for (it = chunks.begin(); it < chunks.end(); it++, chunk++) {
-									chunks.at(0).checkBlockAt(sf::Vector2f(startX, startY), 1, this->buildingManager.isBuilding, this->buildingManager.findBuilding(this->buildingManager.isBuilding));
-								}
-							}
-						}
-					}
-					else {
-						//X Positive and Y Negative Q4
-						for (int startX = playerEvents.getStartDrag().x; startX < mousePos.x; startX += snapGrid) {
-							for (int startY = playerEvents.getStartDrag().y; startY > mousePos.y; startY -= snapGrid) {
-								//Update Chunks
-								vector<Chunk>::iterator it;
-								int chunk = 0;
-								for (it = chunks.begin(); it < chunks.end(); it++, chunk++) {
-									chunks.at(0).checkBlockAt(sf::Vector2f(startX, startY), 1, this->buildingManager.isBuilding, this->buildingManager.findBuilding(this->buildingManager.isBuilding));
-								}
-							}
-						}
-					}
-				}
-				else {
-					if (playerEvents.getOverlay().getSize().y > 0) {
-						//X Negative and Y Positive Q2
-						for (int startX = playerEvents.getStartDrag().x; startX > mousePos.x; startX -= snapGrid) {
-							for (int startY = playerEvents.getStartDrag().y; startY < mousePos.y; startY += snapGrid) {
-								//Update Chunks
-								vector<Chunk>::iterator it;
-								int chunk = 0;
-								for (it = chunks.begin(); it < chunks.end(); it++, chunk++) {
-									chunks.at(0).checkBlockAt(sf::Vector2f(startX, startY), 1, this->buildingManager.isBuilding, this->buildingManager.findBuilding(this->buildingManager.isBuilding));
-								}
-							}
-						}
-					}
-					else {
-						//X and Y Negative Q3
-						for (int startX = playerEvents.getStartDrag().x; startX > mousePos.x; startX -= snapGrid) {
-							for (int startY = playerEvents.getStartDrag().y; startY > mousePos.y; startY -= snapGrid) {
-								//Update Chunks
-								vector<Chunk>::iterator it;
-								int chunk = 0;
-								for (it = chunks.begin(); it < chunks.end(); it++, chunk++) {
-									chunks.at(0).checkBlockAt(sf::Vector2f(startX, startY), 1, this->buildingManager.isBuilding, this->buildingManager.findBuilding(this->buildingManager.isBuilding));
-								}
-							}
-						}
-					}
-				}
-			}
 			playerEvents.setMouseDrag(false);
 			playerEvents.resetOverlay();
+		}
+
+		//Mouse Click and Release Event
+		if (event.type == sf::Event::MouseButtonPressed && InputEvents::mouseEvent() == 2)
+		{
+			playerEvents.setMouseRightHeld(true);
+		}
+		else if (event.type == sf::Event::MouseButtonReleased) {
+			playerEvents.setMouseRightHeld(false);
 		}
 		//EndOfMouse
 
@@ -320,9 +203,11 @@ void GameManager::processInputs() {
 
 void GameManager::update() {
 	camera2D.moveCamera(hori, vert);
+	this->constructManager.update();
 }
 
 void GameManager::mainLoop() {
+	window->setFramerateLimit(60);
 	while (window->isOpen()) {
 		this->processInputs();
 		this->update();
@@ -335,6 +220,7 @@ void GameManager::render() {
 	sf::RectangleShape shape(sf::Vector2f(10, 10));
 	shape.setPosition(InputEvents::roundMousePos(mousePos.x, mousePos.y));
 	shape.setFillColor(sf::Color(225, 225, 225, 176));
+
 	window->setView(this->camera2D.view);
 	window->clear();
 	//Render our chunks
@@ -346,10 +232,10 @@ void GameManager::render() {
 	if (playerEvents.getMouseDrag()) {
 		window->draw(playerEvents.getOverlay());
 	}
-	
-	//End of Render Chunks
 	window->draw(shape);
+	this->constructManager.render(window, camera2D.getView());
+	this->menuManager.render(window, camera2D.getView());
+	//End of Render Chunks
 	//Render GUI
-	buildingManager.drawGUI(window, camera2D.getView());
 	window->display();
 }

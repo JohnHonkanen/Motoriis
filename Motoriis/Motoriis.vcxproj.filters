@@ -21,13 +21,7 @@
     <ClCompile Include="CsvParser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ItemManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Item.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LogisticSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Block.cpp">
@@ -51,16 +45,40 @@
     <ClCompile Include="PropertyModifier.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Building.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="BuildingManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LogisticNetwork.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Camera2D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Construct.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Storage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Pipe.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ConstructManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OutputConstruct.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ConstructMenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ButtonObjects.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ConstructButton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ConstructNetwork.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -74,13 +92,7 @@
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ItemManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Item.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LogisticSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Block.h">
@@ -104,16 +116,40 @@
     <ClInclude Include="PropertyModifier.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Building.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BuildingManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LogisticNetwork.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Camera2D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Construct.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Storage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Pipe.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ConstructManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OutputConstruct.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ConstructMenu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ButtonObjects.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ConstructButton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ConstructNetwork.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -48,14 +48,6 @@ void Chunk::render(sf::RenderWindow *window) {
 	}
 }
 
-void Chunk::checkBlockAt(sf::Vector2f position, int mouseEvent, int tile, Building building) {
-	int xBlock = (position.x - this->chunkPositionX)/10;
-	int yBlock = (position.y - this->chunkPositionY)/10;
-	if (mouseEvent == 1) {
-			Blocks.at(xBlock).at(yBlock)->changeTile(tile, building);	
-	}
-}
-
 Chunk Chunk::getChunkAt(vector<Chunk> chunkList, sf::Vector2f position){
 	vector<Chunk>::iterator it;
 	int i = 0;
