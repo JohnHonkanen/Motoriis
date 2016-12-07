@@ -49,6 +49,11 @@ void OutputConstruct::transferItem() {
 	}
 }
 
+int OutputConstruct::remove()
+{
+	return 0;
+}
+
 void OutputConstruct::calculatePointPosition() {
 	this->points.clear();
 	this->pointCount = 0;

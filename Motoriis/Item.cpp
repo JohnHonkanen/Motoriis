@@ -10,7 +10,7 @@ Item::Item(int uid, string name, int type, string sku, sf::Color color)
 	this->type = type;
 	this->sku = sku;
 	this->color = color;
-	this->amount = 0;
+	this->amount = 1;
 }
 
 

@@ -26,7 +26,7 @@ void ConstructButton::setConstruct(int constructID)
 void ConstructButton::createRect(sf::View view)
 {
 
-	float buttonSize = 15.0f;
+	float buttonSize = view.getSize().x/25.0f;
 	float yOffset = view.getSize().y * 0.01f;
 	sf::Vector2f position = sf::Vector2f(view.getCenter().x - (view.getSize().x / this->xOffsetMultiplier) + buttonSize + ((buttonSize)*1.5), view.getCenter().y + view.getSize().y / 2 - buttonSize - yOffset);
 	sf::RectangleShape shape = sf::RectangleShape();
