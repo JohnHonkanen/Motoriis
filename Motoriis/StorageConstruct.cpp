@@ -13,6 +13,10 @@ StorageConstruct::StorageConstruct(sf::Vector2f position)
 	this->calculatePointPosition();
 	this->flow = -1;
 	this->acceptItems = true;
+	this->states[0].loadFromFile("Texture/storage_1.png");
+	this->states[1].loadFromFile("Texture/storage_2.png");
+	this->states[2].loadFromFile("Texture/storage_3.png");
+	this->states[3].loadFromFile("Texture/storage_4.png");
 }
 
 
@@ -42,8 +46,25 @@ sf::ConvexShape StorageConstruct::draw()
 		shape.setOutlineColor(sf::Color(0, 255, 15));
 	else if (this->type == 2)
 		shape.setOutlineColor(sf::Color(255, 255, 0));
-	shape.setOutlineThickness(-1.0f);
 
+	shape.setOutlineThickness(-0.5f);
+	shape.setTexture(NULL, false);
+	if (this->storage.hasItem()) {
+		if (this->storage.getItem()->getAmount() == 0)
+			shape.setTexture(NULL, false);
+		else if (this->storage.getItem()->getAmount() >= 1 && this->storage.getItem()->getAmount() < 2) {
+			shape.setTexture(&this->states[0], false);
+		}
+		else if (this->storage.getItem()->getAmount() >= 2 && this->storage.getItem()->getAmount() < 5) {
+			shape.setTexture(&this->states[1], false);
+		}
+		else if (this->storage.getItem()->getAmount() >= 5 && this->storage.getItem()->getAmount() < 10) {
+			shape.setTexture(&this->states[2], false);
+		}
+		else if (this->storage.getItem()->getAmount() == 10) {
+			shape.setTexture(&this->states[3], false);
+		}
+	}
 
 	return shape;
 }

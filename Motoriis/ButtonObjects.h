@@ -7,6 +7,7 @@ public:
 	~ButtonObjects();
 	virtual void draw(sf::RenderWindow *window, sf::View view) = 0;
 	virtual void update() = 0;
+	bool intersects(sf::Vector2f position);
 protected:
 	virtual void createRect(sf::View view) = 0;
 	float xOffsetMultiplier;

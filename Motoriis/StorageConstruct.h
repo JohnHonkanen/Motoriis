@@ -27,5 +27,6 @@ public:
 	LinkedStorage* getHead();
 private:
 	LinkedStorage* head;
+	sf::Texture states[4];
 };
 

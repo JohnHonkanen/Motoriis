@@ -59,8 +59,12 @@ void GameManager::processInputs() {
 		}
 		//Normal Construction
 		if (playerEvents.getMouseHeld()) {
-			if (this->constructManager.checkPosition(roundedPos) == NULL) {
-				this->constructManager.buildConstruct(roundedPos, this->itemManager);
+			if (this->menuManager.intersectsButton(sf::Vector2f(mousePos.x, mousePos.y))) {
+				this->constructManager.setConstruct(dynamic_cast<ConstructMenu*>(this->menuManager.getFound())->getActive());
+			} else{
+				if (this->constructManager.checkPosition(roundedPos) == NULL) {
+					this->constructManager.buildConstruct(roundedPos, this->itemManager);
+				}
 			}
 
 		}

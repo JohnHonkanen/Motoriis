@@ -42,5 +42,6 @@ protected:
 	sf::Color color;
 	bool acceptItems = true;
 	int type = 0; //OUTPUT OR INPUT 
+	sf::Texture texture;
 };
 

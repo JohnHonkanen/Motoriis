@@ -9,6 +9,7 @@ EndConstruct::EndConstruct()
 EndConstruct::EndConstruct(sf::Vector2f position)
 {
 	this->position = position;
+	this->texture.loadFromFile("Texture/shipping.jpg");
 }
 
 
@@ -35,9 +36,7 @@ void EndConstruct::render(sf::RenderWindow * window, sf::View view)
 {
 	sf::RectangleShape shape = sf::RectangleShape(sf::Vector2f(10,10));
 	shape.setPosition(this->position);
-	shape.setFillColor(sf::Color(55, 55, 255));
-	shape.setOutlineColor(sf::Color(55, 55, 255));
-	shape.setOutlineThickness(-1.0f);
+	shape.setTexture(&this->texture, false);
 	window->draw(shape);
 }
 

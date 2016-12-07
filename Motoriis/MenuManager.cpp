@@ -35,3 +35,21 @@ void MenuManager::addMenu(Menu * menu)
 		tail = tail->next;
 	}
 }
+
+bool MenuManager::intersectsButton(sf::Vector2f position)
+{
+	MenuNodes *current = this->head;
+	while (current != NULL) {
+		if (current->menu->onButton(position)) {
+			this->foundMenu = current->menu;
+			return true;
+		}
+		current = current->next;
+	}
+	return false;
+}
+
+Menu * MenuManager::getFound()
+{
+	return this->foundMenu;
+}

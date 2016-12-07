@@ -13,6 +13,7 @@ public:
 	Menu();
 	~Menu();
 	virtual void draw(sf::RenderWindow *window, sf::View view) = 0;
+	virtual bool onButton(sf::Vector2f position) = 0;
 	void addButtons(ButtonObjects *button);
 protected:
 	sf::Vector2f position;
