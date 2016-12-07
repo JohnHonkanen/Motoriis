@@ -18,6 +18,7 @@ public:
 	void calculatePath(Construct *construct, CLinked *visitedHead, CLinked *visitedTail);
 	void update(Construct *construct, CLinked *last, CLinked* head);
 	void setTail();
+	Construct* getHeadConstruct();
 private:
 	bool checkVisits(Construct *construct, CLinked *head);
 	CLinked* head;

@@ -23,7 +23,12 @@ void ConstructNetwork::setTail()
 	visitedHead->construct = this->head->construct;
 	visitedHead->prev = NULL;
 	visitedHead->next = NULL;
-	this->calculatePath(this->head->construct, visitedHead, visitedHead);
+	this->calculatePath(this->head->construct->mainOutput, visitedHead, visitedHead);
+}
+
+Construct * ConstructNetwork::getHeadConstruct()
+{
+	return this->head->construct;
 }
 
 void ConstructNetwork::calculatePath(Construct *construct, CLinked *visitedHead, CLinked *visitedTail)
@@ -63,7 +68,7 @@ void ConstructNetwork::calculatePath(Construct *construct, CLinked *visitedHead,
 
 void ConstructNetwork::update(Construct *construct, CLinked *prev, CLinked* head)
 {
-	if (construct == head->construct || construct->storage.hasItem())
+	if (construct == head->construct->mainOutput || !construct->accepting() || prev == NULL)
 		return;
 
 	prev->construct->transferItem();

@@ -11,9 +11,34 @@ Construct::~Construct()
 {
 }
 
-void Construct::addItem(Item item) {
-	this->color = item.getColor();
-	this->storage.storeItem(item);
+int Construct::remove()
+{
+	this->removeConnections();
+	return 1;
+}
+
+void Construct::render(sf::RenderWindow * window, sf::View view)
+{
+	window->draw(this->draw());
+}
+
+void Construct::handleBaseInputs()
+{
+	//Do nothing
+}
+
+bool Construct::accepts() {
+	return this->acceptItems;
+}
+bool Construct::addItem(Item *item) {
+	if (this->acceptItems && !this->storage.hasItem()) {
+		this->color = item->getColor();
+		this->storage.storeItem(item);
+	}
+	else
+		return false;
+	return true;
+	
 }
 
 void Construct::setFlow(int flow)
@@ -70,4 +95,24 @@ void Construct::removeConnections()
 		
 
 	delete this;
+}
+
+void Construct::setColor(sf::Color color)
+{
+	this->color = color;
+}
+
+bool Construct::accepting()
+{
+	return !this->storage.hasItem();
+}
+
+int Construct::getType()
+{
+	return this->type;
+}
+
+void Construct::setType(int type)
+{
+	this->type = type;
 }

@@ -89,7 +89,7 @@ void ConstructManager::render(sf::RenderWindow *window, sf::View view) {
 
 	CLinked* current = this->head;
 	while (current != NULL) {
-		window->draw(current->construct->draw());
+		current->construct->render(window, view);
 		current = current->next;
 	}
 }
@@ -99,7 +99,7 @@ void ConstructManager::update() {
 		return;
 
 	elasped = clock.getElapsedTime();
-	if (elasped.asSeconds() >0.3f) {
+	if (elasped.asSeconds() > 0.5f) {
 		this->runNetwork(this->nHead);
 		clock.restart();
 	}
@@ -126,13 +126,12 @@ Construct* ConstructManager::checkPosition(sf::Vector2f position) {
 			if (current->construct->getPosition().y == position.y) {
 				this->count++;
 				construct = current->construct;
-				if (this->lastChecked != NULL)
-					this->changeFlow(this->lastChecked->construct, current->construct);
 				this->lastChecked = current;
 				return construct;
 			}
 		current = current->next;
 	}
+	//Check
 	this->lastChecked = current;
 	return construct;
 }
@@ -144,18 +143,70 @@ CLinked * ConstructManager::getLastChecked()
 
 void ConstructManager::removeLink()
 {
+	if (!this->isConstructing)
+		return;
 	CLinked* remove = this->lastChecked;
-	if (remove->construct->getFlow() != 5) {
-		remove->construct->removeConnections();
+	int removeType = remove->construct->remove();
+	if (removeType == 1) {
 		if (remove->next != NULL)
 			remove->next->prev = remove->prev;
+
 		remove->prev->next = remove->next;
+
 		if (remove == this->tail)
 			this->tail = remove->prev;
+
 		this->lastChecked = NULL;
 		delete remove;
 	}
+	else if (removeType == 2) {
+		StorageConstruct* construct = dynamic_cast<StorageConstruct*>(remove->construct);
+		LinkedStorage* head = construct->getHead();
+		this->removeFromNetwork(head->construct);
+		LinkedStorage* current = head->next;
+		while (current != NULL) {
+			this->checkPosition(current->construct->getPosition());
+			this->remove();
+			current = current->next;
+		}
+		this->checkPosition(head->construct->getPosition());
+		this->remove();
+	}
 	
+
+}
+
+void ConstructManager::removeFromNetwork(Construct* construct)
+{
+	Network* current = this->nHead;
+	while (current != NULL) {
+ 		if (current->network->getHeadConstruct() == construct) {
+			if (current == this->nHead) {
+				if (current == this->nTail) {
+					this->nHead = NULL;
+					this->nTail = NULL;
+					current = NULL;
+				}else{
+					this->nHead = this->nHead->next;
+					current = NULL;
+				}
+			} else{
+				if (current == this->nTail) {
+					this->nTail = this->nTail->prev;
+					current = NULL;
+				}
+				else {
+					current->prev->next = current->next;
+					current->next->prev = current->prev;
+					current = NULL;
+				}
+			}
+			delete current;
+		}
+		else {
+			current = current->next;
+		}
+	}
 }
 
 void ConstructManager::changeFlow(Construct * c1, Construct * c2)
@@ -177,4 +228,124 @@ void ConstructManager::changeFlow(Construct * c1, Construct * c2)
 		c2->setFlow(4);
 	}
 		
+}
+
+void ConstructManager::addStorageConstruct(sf::Vector2f position)
+{
+
+	StorageConstruct* left = new StorageConstruct(position);
+	StorageConstruct* right = new StorageConstruct(position + sf::Vector2f(10, 0));
+	StorageConstruct* leftBottom = new StorageConstruct(position + sf::Vector2f(0,10));
+	StorageConstruct* rightBottom = new StorageConstruct(position + sf::Vector2f(10, 10));
+
+	LinkedStorage* head = new LinkedStorage();
+	head->construct = left;
+	head->head = head;
+	//right
+	LinkedStorage* linked = new LinkedStorage();
+	linked->construct = right;
+	linked->head = head;
+	head->next = linked;
+	linked->next = new LinkedStorage();
+	//rightBottom
+	linked = linked->next;
+	linked->construct = rightBottom;
+	linked->head = head;
+	linked->next = new LinkedStorage();
+	//leftBottom
+	linked = linked->next;
+	linked->construct = leftBottom;
+	linked->head = head;
+
+	left->setHead(head);
+	right->setHead(head);
+	leftBottom->setHead(head);
+	rightBottom->setHead(head);
+	rightBottom->setType(2);
+
+
+	this->addToList(left);
+	this->addToList(right);
+	this->addToList(leftBottom);
+	this->addToList(rightBottom);
+	this->addNetwork(left);
+}
+
+void ConstructManager::setConstruct(int construct)
+{
+	this->construct = construct;
+}
+
+void ConstructManager::buildConstruct(sf::Vector2f position, ItemManager manager)
+{
+	if (!this->isConstructing)
+		return;
+
+	if (this->construct != 0) {
+		Construct* construct;
+		if (this->construct == 1) {
+			construct = new Pipe(position);
+			this->addToList(construct);
+		}
+		else if (this->construct == 2) {
+			this->addStorageConstruct(position);
+		}
+		else if (this->construct == 3) {
+			Construct *machine = Machine::makeMachine(position, manager);
+			this->addToList(machine);
+			this->addToList(dynamic_cast<Machine*>(machine)->input1);
+			this->addToList(dynamic_cast<Machine*>(machine)->input2);
+			this->addToList(dynamic_cast<Machine*>(machine)->output);
+			this->addNetwork(machine);
+		}
+		else if (this->construct == 4) {
+			construct = new EndConstruct(position);
+			this->addToList(construct);
+		}
+	}
+	
+}
+
+void ConstructManager::setConstructing(bool value)
+{
+	this->isConstructing = value;
+}
+
+bool ConstructManager::getConstructing()
+{
+	return this->isConstructing;
+}
+
+sf::RectangleShape ConstructManager::drawHelper(sf::Vector2f position)
+{
+	sf::RectangleShape shape(sf::Vector2f(10, 10));
+	shape.setPosition(position);
+	if(this->checkPosition(position) != NULL)
+		shape.setFillColor(sf::Color(225, 40, 40, 176));
+	else
+		shape.setFillColor(sf::Color(225, 225, 225, 176));
+
+	if (this->construct == 1)
+		shape.setSize(sf::Vector2f(10, 10));
+	else if(this->construct == 2)
+		shape.setSize(sf::Vector2f(20, 20));
+	else if (this->construct == 3)
+		shape.setSize(sf::Vector2f(20, 30));
+
+	return shape;
+}
+
+void ConstructManager::remove()
+{
+	CLinked* remove = this->lastChecked;
+	if (remove->next != NULL)
+		remove->next->prev = remove->prev;
+
+	remove->prev->next = remove->next;
+
+	if (remove == this->tail)
+		this->tail = remove->prev;
+
+	this->lastChecked = NULL;
+	delete remove;
 }

@@ -9,5 +9,6 @@ public:
 	sf::ConvexShape draw();
 	void calculatePointPosition();
 	void transferItem();
+	int remove();
 };
 

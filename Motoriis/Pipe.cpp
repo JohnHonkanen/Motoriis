@@ -32,7 +32,10 @@ sf::ConvexShape Pipe::draw() {
 	else {
 		shape.setFillColor(sf::Color::Transparent);
 	}
-	shape.setOutlineColor(sf::Color(255, 55, 0));
+	if(this->flow == 0)
+		shape.setOutlineColor(sf::Color(255, 55, 0));
+	else
+		shape.setOutlineColor(sf::Color(55, 155, 0));
 	shape.setOutlineThickness(-1.0f);
 
 
@@ -90,37 +93,33 @@ void Pipe::transferItem()
 		this->flow = 0;
 	}
 	else {
-		if (this->flow == 1 && this->top != NULL) {
-			if (!this->top->storage.hasItem()) {
-				this->top->addItem(this->storage.getItem());
-				if(this->top->getFlow() == 0)
-					this->top->setFlow(1);
-				this->storage.removeItem();
-			}
+		if (this->flow == 1 && this->top != NULL && this->top->accepts()) {
+				if (this->top->addItem(this->storage.getItem())) {
+					if (this->top->getFlow() == 0)
+						this->top->setFlow(1);
+					this->storage.removeItem();
+				}
 		}
-		else if (this->flow == 2 && this->right != NULL) {
-			if (!this->right->storage.hasItem()) {
-				this->right->addItem(this->storage.getItem());
-				if (this->right->getFlow() == 0)
-					this->right->setFlow(2);
-				this->storage.removeItem();
-			}
+		else if (this->flow == 2 && this->right != NULL && this->right->accepts()) {
+				if (this->right->addItem(this->storage.getItem())) {
+					if (this->right->getFlow() == 0)
+						this->right->setFlow(2);
+					this->storage.removeItem();
+				}
 		}
-		else if (this->flow == 3 && this->bottom != NULL) {
-			if (!this->bottom->storage.hasItem()) {
-				this->bottom->addItem(this->storage.getItem());
-				if (this->bottom->getFlow() == 0)
-					this->bottom->setFlow(3);
-				this->storage.removeItem();
-			}
+		else if (this->flow == 3 && this->bottom != NULL && this->bottom->accepts()) {
+				if (this->bottom->addItem(this->storage.getItem())) {
+					if (this->bottom->getFlow() == 0)
+						this->bottom->setFlow(3);
+					this->storage.removeItem();
+				}
 		}
-		else if (this->flow == 4 && this->left != NULL) {
-			if (!this->left->storage.hasItem()) {
-				this->left->addItem(this->storage.getItem());
-				if (this->left->getFlow() == 0)
-					this->left->setFlow(4);
-				this->storage.removeItem();
-			}
+		else if (this->flow == 4 && this->left != NULL && this->left->accepts()) {
+				if (this->left->addItem(this->storage.getItem())) {
+					if (this->left->getFlow() == 0)
+						this->left->setFlow(4);
+					this->storage.removeItem();
+				}
 		}
 		else {
 			this->redirectFlow();

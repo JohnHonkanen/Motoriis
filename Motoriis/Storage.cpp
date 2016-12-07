@@ -17,17 +17,18 @@ Storage::~Storage()
 {
 }
 
-void Storage::storeItem(Item item) {
-	this->item = item;
+void Storage::storeItem(Item *item) {
+	Item *newItem = new Item(item->getUID(), item->getName(), item->getType(), item->getSKU(), item->getColor());
+	this->item = newItem;
 	this->containsItem = true;
 }
 
 void Storage::removeItem() {
 	this->containsItem = false;
-	this->item = Item();
+	this->item = NULL;
 }
 
-Item Storage::getItem() {
+Item *Storage::getItem() {
 	return this->item;
 }
 

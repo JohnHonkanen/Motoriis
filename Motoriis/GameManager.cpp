@@ -18,15 +18,12 @@ bool GameManager::init() {
 	this->window = new sf::RenderWindow(sf::VideoMode(this->windowHeight, this->windowWidth), "Motoriss");
 	this->camera2D = Camera2D(this->windowHeight / 2, this->windowWidth / 2);
 	this->window->setView(view);
-
-	Item blue =  Item(1, "Blueberry", 0, "BLU0", sf::Color(122,0,168));
-	Item milk =  Item(2, "Milk", 0, "MLK0", sf::Color(220, 217, 205));
 	
 	Construct* outputBlue = new OutputConstruct(InputEvents::roundMousePos(800, 400));
-	outputBlue->addItem(blue);
+	outputBlue->addItem(&itemManager.findItem(0));
 	Construct* outputMilk = new OutputConstruct(InputEvents::roundMousePos(800, 420));
 	outputMilk->setFlow(5);
-	outputMilk->addItem(milk);
+	outputMilk->addItem(&itemManager.findItem(1));
 	this->constructManager.addToList(outputBlue);
 	this->constructManager.addToList(outputMilk);
 	this->constructManager.addNetwork(outputBlue);
@@ -62,9 +59,12 @@ void GameManager::processInputs() {
 		}
 		//Normal Construction
 		if (playerEvents.getMouseHeld()) {
-			if (this->constructManager.checkPosition(roundedPos) == NULL) {
-				Construct* newPipe = new Pipe(roundedPos);
-				this->constructManager.addToList(newPipe);
+			if (this->menuManager.intersectsButton(sf::Vector2f(mousePos.x, mousePos.y))) {
+				this->constructManager.setConstruct(dynamic_cast<ConstructMenu*>(this->menuManager.getFound())->getActive());
+			} else{
+				if (this->constructManager.checkPosition(roundedPos) == NULL) {
+					this->constructManager.buildConstruct(roundedPos, this->itemManager);
+				}
 			}
 
 		}
@@ -113,6 +113,22 @@ void GameManager::processInputs() {
 			}
 			else if (event.key.code == sf::Keyboard::D) {
 				hori = 1;
+			}
+			//Constructing...
+			if (event.key.code == sf::Keyboard::Num1)
+				this->constructManager.setConstruct(1);
+			else if (event.key.code == sf::Keyboard::Num2)
+				this->constructManager.setConstruct(2);
+			else if (event.key.code == sf::Keyboard::Num3)
+				this->constructManager.setConstruct(3);
+			else if (event.key.code == sf::Keyboard::Num4)
+				this->constructManager.setConstruct(4);
+
+			if (event.key.code == sf::Keyboard::B) {
+				if (this->constructManager.getConstructing())
+					this->constructManager.setConstructing(false);
+				else
+					this->constructManager.setConstructing(true);
 			}
 		}
 
@@ -217,10 +233,6 @@ void GameManager::mainLoop() {
 
 void GameManager::render() {
 
-	sf::RectangleShape shape(sf::Vector2f(10, 10));
-	shape.setPosition(InputEvents::roundMousePos(mousePos.x, mousePos.y));
-	shape.setFillColor(sf::Color(225, 225, 225, 176));
-
 	window->setView(this->camera2D.view);
 	window->clear();
 	//Render our chunks
@@ -232,8 +244,9 @@ void GameManager::render() {
 	if (playerEvents.getMouseDrag()) {
 		window->draw(playerEvents.getOverlay());
 	}
-	window->draw(shape);
 	this->constructManager.render(window, camera2D.getView());
+	if(this->constructManager.getConstructing())
+		window->draw(this->constructManager.drawHelper(InputEvents::roundMousePos(mousePos.x, mousePos.y)));
 	this->menuManager.render(window, camera2D.getView());
 	//End of Render Chunks
 	//Render GUI

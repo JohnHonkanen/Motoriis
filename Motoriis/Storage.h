@@ -7,14 +7,14 @@ public:
 	Storage();
 	Storage(int ID);
 	~Storage();
-	void storeItem(Item item);
+	void storeItem(Item *item);
 	void removeItem();
-	Item getItem();
+	Item *getItem();
 	bool hasItem();
 
 private:
 	int ID;
-	Item item;
+	Item *item;
 	bool containsItem = false;
 };
 

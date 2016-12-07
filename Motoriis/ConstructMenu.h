@@ -8,6 +8,8 @@ public:
 	ConstructMenu();
 	~ConstructMenu();
 	void draw(sf::RenderWindow *window, sf::View view);
+	bool onButton(sf::Vector2f position);
+	int getActive();
 private:
 	int activeConstruct;
 	int state;

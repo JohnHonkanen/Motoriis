@@ -1,15 +1,14 @@
 #include <vector>
-#include <iostream>
 #include <SFML/Graphics.hpp>
 #include "InputEvents.h"
 #include "Player.h"
 #include "Chunk.h"
 #include "ConstructManager.h"
 #include "MenuManager.h"
+#include "ItemManager.h"
 #include "Camera2D.h"
 #include "CsvParser.h"
 
-using namespace std;
 #pragma once
 class GameManager
 {
@@ -34,6 +33,7 @@ private:
 	InputEvents playerEvents;
 	ConstructManager constructManager;
 	MenuManager menuManager;
+	ItemManager itemManager;
 
 	int windowHeight;
 	int windowWidth;
