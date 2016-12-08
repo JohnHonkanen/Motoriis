@@ -1,6 +1,7 @@
 #pragma once
 #include "Menu.h"
 #include "ConstructMenu.h"
+#include "EconomyMenu.h"
 class MenuNodes {
 public:
 	Menu *menu;
@@ -9,7 +10,7 @@ public:
 class MenuManager
 {
 public:
-	MenuManager();
+	MenuManager(ConstructManager *cManager);
 	~MenuManager();
 	void render(sf::RenderWindow *window, sf::View view);
 	void update();

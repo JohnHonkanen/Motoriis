@@ -6,6 +6,7 @@
 #include "ConstructManager.h"
 #include "MenuManager.h"
 #include "ItemManager.h"
+#include "EconomyManager.h"
 #include "Camera2D.h"
 #include "CsvParser.h"
 
@@ -32,8 +33,9 @@ private:
 	vector<Chunk> chunks;
 	InputEvents playerEvents;
 	ConstructManager constructManager;
-	MenuManager menuManager;
+	MenuManager menuManager = MenuManager(&constructManager);
 	ItemManager itemManager;
+	EconomyManager economyManager;
 
 	int windowHeight;
 	int windowWidth;

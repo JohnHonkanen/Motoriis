@@ -16,6 +16,5 @@ public:
 private:
 	void createRect(sf::View view);
 	int constructId;
-	sf::Texture texture;
 };
 

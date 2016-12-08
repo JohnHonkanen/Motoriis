@@ -60,7 +60,7 @@ void GameManager::processInputs() {
 		//Normal Construction
 		if (playerEvents.getMouseHeld()) {
 			if (this->menuManager.intersectsButton(sf::Vector2f(mousePos.x, mousePos.y))) {
-				this->constructManager.setConstruct(dynamic_cast<ConstructMenu*>(this->menuManager.getFound())->getActive());
+				this->menuManager.getFound()->handleClicked();
 			} else{
 				if (this->constructManager.checkPosition(roundedPos) == NULL) {
 					this->constructManager.buildConstruct(roundedPos, this->itemManager);
@@ -248,6 +248,7 @@ void GameManager::render() {
 	if(this->constructManager.getConstructing())
 		window->draw(this->constructManager.drawHelper(InputEvents::roundMousePos(mousePos.x, mousePos.y)));
 	this->menuManager.render(window, camera2D.getView());
+	this->economyManager.render(window, camera2D.getView());
 	//End of Render Chunks
 	//Render GUI
 	window->display();

@@ -12,8 +12,9 @@ class Menu
 public:
 	Menu();
 	~Menu();
-	virtual void draw(sf::RenderWindow *window, sf::View view) = 0;
+	virtual void draw(sf::RenderWindow *window, sf::View view);
 	virtual bool onButton(sf::Vector2f position) = 0;
+	virtual bool handleClicked() = 0;
 	void addButtons(ButtonObjects *button);
 protected:
 	sf::Vector2f position;

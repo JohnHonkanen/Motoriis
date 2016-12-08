@@ -2,7 +2,7 @@
 
 
 
-ConstructMenu::ConstructMenu()
+ConstructMenu::ConstructMenu(ConstructManager *manager)
 {
 	ConstructButton *pipeButton = new ConstructButton(1.8f, "Texture/pipes.jpg");
 	pipeButton->setConstruct(1);
@@ -20,20 +20,12 @@ ConstructMenu::ConstructMenu()
 	endButton->setConstruct(4);
 	this->addButtons(endButton);
 
-}
+	this->manager = manager;
 
+}
 
 ConstructMenu::~ConstructMenu()
 {
-}
-
-void ConstructMenu::draw(sf::RenderWindow *window, sf::View view)
-{
-	ButtonList *current = this->head;
-	while (current != NULL) {
-		current->button->draw(window, view);
-		current = current->next;
-	}
 }
 
 bool ConstructMenu::onButton(sf::Vector2f position)
@@ -47,6 +39,12 @@ bool ConstructMenu::onButton(sf::Vector2f position)
 			
 		current = current->next;
 	}
+	return false;
+}
+
+bool ConstructMenu::handleClicked()
+{
+	this->manager->setConstruct(this->getActive());
 	return false;
 }
 

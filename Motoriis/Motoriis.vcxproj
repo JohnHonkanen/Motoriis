@@ -165,6 +165,9 @@
     <ClCompile Include="ConstructManager.cpp" />
     <ClCompile Include="ConstructMenu.cpp" />
     <ClCompile Include="ConstructNetwork.cpp" />
+    <ClCompile Include="EconomyButton.cpp" />
+    <ClCompile Include="EconomyManager.cpp" />
+    <ClCompile Include="EconomyMenu.cpp" />
     <ClCompile Include="EndConstruct.cpp" />
     <ClCompile Include="ItemManager.cpp" />
     <ClCompile Include="Machine.cpp" />
@@ -195,6 +198,9 @@
     <ClInclude Include="ConstructManager.h" />
     <ClInclude Include="ConstructMenu.h" />
     <ClInclude Include="ConstructNetwork.h" />
+    <ClInclude Include="EconomyButton.h" />
+    <ClInclude Include="EconomyManager.h" />
+    <ClInclude Include="EconomyMenu.h" />
     <ClInclude Include="EndConstruct.h" />
     <ClInclude Include="ItemManager.h" />
     <ClInclude Include="Machine.h" />

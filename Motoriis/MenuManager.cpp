@@ -1,10 +1,9 @@
 #include "MenuManager.h"
 
-
-
-MenuManager::MenuManager()
+MenuManager::MenuManager(ConstructManager *cManager)
 {
-	this->addMenu(new ConstructMenu());
+	this->addMenu(new ConstructMenu(cManager));
+	this->addMenu(new EconomyMenu());
 }
 
 
@@ -31,8 +30,8 @@ void MenuManager::addMenu(Menu * menu)
 		this->tail = newNode;
 	}
 	else {
-		tail->next = newNode;
-		tail = tail->next;
+		this->tail->next = newNode;
+		this->tail = tail->next;
 	}
 }
 
