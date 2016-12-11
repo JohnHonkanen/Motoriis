@@ -15,6 +15,7 @@ public:
 	void transferItem();
 	void render(sf::RenderWindow *window, sf::View view);
 	void handleBaseInputs();
+	int remove();
 	Construct* input1;
 	Construct* input2;
 	Construct* output;

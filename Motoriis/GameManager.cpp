@@ -20,14 +20,16 @@ bool GameManager::init() {
 	this->window->setView(view);
 	
 	Construct* outputBlue = new OutputConstruct(InputEvents::roundMousePos(800, 400));
-	outputBlue->addItem(&itemManager.findItem(0));
 	Construct* outputMilk = new OutputConstruct(InputEvents::roundMousePos(800, 420));
-	outputMilk->setFlow(5);
-	outputMilk->addItem(&itemManager.findItem(1));
 	this->constructManager.addToList(outputBlue);
 	this->constructManager.addToList(outputMilk);
 	this->constructManager.addNetwork(outputBlue);
 	this->constructManager.addNetwork(outputMilk);
+	Construct *inputs[2] = { outputBlue, outputMilk };
+	this->contractManager = ContractManager(&itemManager, &economyManager, inputs);
+	this->menuManager = MenuManager(&constructManager, &contractManager, &economyManager, inputs);
+	this->constructManager.addContractManager(&this->contractManager);
+	this->constructManager.addEconomyManager(&this->economyManager);
 	if (!window)
 		return false;
 	return true;

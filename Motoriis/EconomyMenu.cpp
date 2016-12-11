@@ -2,8 +2,9 @@
 
 
 
-EconomyMenu::EconomyMenu()
+EconomyMenu::EconomyMenu(ContractManager *cManager)
 {
+	this->cManager = cManager;
 	EconomyButton *buyButton = new EconomyButton(0.0f, "Texture/contracts.png");
 	this->addButtons(buyButton);
 }
@@ -28,6 +29,13 @@ bool EconomyMenu::onButton(sf::Vector2f position)
 
 bool EconomyMenu::handleClicked()
 {
-	return false;
+	if (this->cManager->getShowMenu())
+		this->cManager->setShowMenu(false);
+	else
+		this->cManager->setShowMenu(true);
+
+	std::cout << this->cManager->getShowMenu() << std::endl;
+
+	return true;
 }
 

@@ -8,6 +8,7 @@ StorageConstruct::StorageConstruct()
 
 StorageConstruct::StorageConstruct(sf::Vector2f position)
 {
+	this->main = this;
 	this->position = position;
 	this->scale = 2.0f;
 	this->calculatePointPosition();
@@ -89,7 +90,7 @@ bool StorageConstruct::addItem(Item *item, LinkedStorage *current)
 		current->construct->storage.storeItem(item);
 		return true;
 	}
-	else if (current->construct->storage.getItem()->getAmount() < 10) {
+	else if (current->construct->storage.getItem()->getAmount() < 10 && current->construct->storage.getItem()->getUID() == item->getUID()) {
 		current->construct->storage.getItem()->addAmount(1);
 		return true;
 	}

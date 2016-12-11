@@ -13,21 +13,36 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Constructs">
+      <UniqueIdentifier>{b3c4c6c7-1b31-48e7-be87-f7267321c395}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Constructs">
+      <UniqueIdentifier>{28f2c3e7-3734-4988-99dc-41b64bce39c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Menus">
+      <UniqueIdentifier>{3f350ae8-f3dc-4867-8fa4-838d1a86631c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Tiles">
+      <UniqueIdentifier>{db5afeda-f781-41b0-9516-94e25394a1b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Menu">
+      <UniqueIdentifier>{a5ed4cd0-bd2e-466e-813f-e28469bbb9f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tiles">
+      <UniqueIdentifier>{298841c3-9713-43dd-abc8-4f4dc4016a3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Contracts">
+      <UniqueIdentifier>{35297685-e9e0-4a26-b952-79ac8ace5578}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Contracts">
+      <UniqueIdentifier>{f3155443-cc6d-4112-af49-a9ce9be7d6c3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CsvParser.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Item.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Block.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Chunk.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
@@ -42,49 +57,10 @@
     <ClCompile Include="Camera2D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Construct.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Storage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Pipe.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ConstructManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="OutputConstruct.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Menu.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ConstructMenu.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ButtonObjects.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ConstructButton.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="MenuManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ConstructNetwork.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="StorageConstruct.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Machine.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="BaseInput.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="EndConstruct.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ItemManager.cpp">
@@ -93,30 +69,84 @@
     <ClCompile Include="EconomyManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="EconomyMenu.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Construct.cpp">
+      <Filter>Source Files\Constructs</Filter>
+    </ClCompile>
+    <ClCompile Include="Machine.cpp">
+      <Filter>Source Files\Constructs</Filter>
+    </ClCompile>
+    <ClCompile Include="Pipe.cpp">
+      <Filter>Source Files\Constructs</Filter>
+    </ClCompile>
+    <ClCompile Include="OutputConstruct.cpp">
+      <Filter>Source Files\Constructs</Filter>
+    </ClCompile>
+    <ClCompile Include="StorageConstruct.cpp">
+      <Filter>Source Files\Constructs</Filter>
+    </ClCompile>
+    <ClCompile Include="Storage.cpp">
+      <Filter>Source Files\Constructs</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseInput.cpp">
+      <Filter>Source Files\Constructs</Filter>
+    </ClCompile>
+    <ClCompile Include="Block.cpp">
+      <Filter>Source Files\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="ButtonObjects.cpp">
+      <Filter>Source Files\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="ConstructButton.cpp">
+      <Filter>Source Files\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="Chunk.cpp">
+      <Filter>Source Files\Tiles</Filter>
     </ClCompile>
     <ClCompile Include="EconomyButton.cpp">
+      <Filter>Source Files\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="ConstructMenu.cpp">
+      <Filter>Source Files\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu.cpp">
+      <Filter>Source Files\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="ConstructNetwork.cpp">
+      <Filter>Source Files\Constructs</Filter>
+    </ClCompile>
+    <ClCompile Include="EndConstruct.cpp">
+      <Filter>Source Files\Constructs</Filter>
+    </ClCompile>
+    <ClCompile Include="Contracts.cpp">
+      <Filter>Source Files\Contracts</Filter>
+    </ClCompile>
+    <ClCompile Include="BuyContracts.cpp">
+      <Filter>Source Files\Contracts</Filter>
+    </ClCompile>
+    <ClCompile Include="SellContracts.cpp">
+      <Filter>Source Files\Contracts</Filter>
+    </ClCompile>
+    <ClCompile Include="ContractManager.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ContractMenu.cpp">
+      <Filter>Source Files\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="EconomyMenu.cpp">
+      <Filter>Source Files\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="ContractButton.cpp">
+      <Filter>Source Files\Menu</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CsvParser.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Item.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Block.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Chunk.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
@@ -131,49 +161,10 @@
     <ClInclude Include="Camera2D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Construct.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Storage.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Pipe.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ConstructManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="OutputConstruct.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Menu.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ConstructMenu.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ButtonObjects.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ConstructButton.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="MenuManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ConstructNetwork.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="StorageConstruct.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Machine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BaseInput.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="EndConstruct.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ItemManager.h">
@@ -182,11 +173,74 @@
     <ClInclude Include="EconomyManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="EconomyMenu.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Construct.h">
+      <Filter>Header Files\Constructs</Filter>
+    </ClInclude>
+    <ClInclude Include="Machine.h">
+      <Filter>Header Files\Constructs</Filter>
+    </ClInclude>
+    <ClInclude Include="Pipe.h">
+      <Filter>Header Files\Constructs</Filter>
+    </ClInclude>
+    <ClInclude Include="StorageConstruct.h">
+      <Filter>Header Files\Constructs</Filter>
+    </ClInclude>
+    <ClInclude Include="Storage.h">
+      <Filter>Header Files\Constructs</Filter>
+    </ClInclude>
+    <ClInclude Include="OutputConstruct.h">
+      <Filter>Header Files\Constructs</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseInput.h">
+      <Filter>Header Files\Constructs</Filter>
+    </ClInclude>
+    <ClInclude Include="ButtonObjects.h">
+      <Filter>Header Files\Menus</Filter>
+    </ClInclude>
+    <ClInclude Include="ConstructButton.h">
+      <Filter>Header Files\Menus</Filter>
     </ClInclude>
     <ClInclude Include="EconomyButton.h">
+      <Filter>Header Files\Menus</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu.h">
+      <Filter>Header Files\Menus</Filter>
+    </ClInclude>
+    <ClInclude Include="Block.h">
+      <Filter>Header Files\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Chunk.h">
+      <Filter>Header Files\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="ConstructMenu.h">
+      <Filter>Header Files\Menus</Filter>
+    </ClInclude>
+    <ClInclude Include="EndConstruct.h">
+      <Filter>Header Files\Constructs</Filter>
+    </ClInclude>
+    <ClInclude Include="ConstructNetwork.h">
+      <Filter>Header Files\Constructs</Filter>
+    </ClInclude>
+    <ClInclude Include="Contracts.h">
+      <Filter>Header Files\Contracts</Filter>
+    </ClInclude>
+    <ClInclude Include="BuyContracts.h">
+      <Filter>Header Files\Contracts</Filter>
+    </ClInclude>
+    <ClInclude Include="SellContracts.h">
+      <Filter>Header Files\Contracts</Filter>
+    </ClInclude>
+    <ClInclude Include="ContractManager.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ContractMenu.h">
+      <Filter>Header Files\Menus</Filter>
+    </ClInclude>
+    <ClInclude Include="EconomyMenu.h">
+      <Filter>Header Files\Menus</Filter>
+    </ClInclude>
+    <ClInclude Include="ContractButton.h">
+      <Filter>Header Files\Menus</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -20,6 +20,7 @@ Machine::Machine(sf::Vector2f position, ItemManager manager)
 {
 	this->position = position;
 	this->manager = manager;
+	this->main = this;
 }
 
 Machine * Machine::makeMachine(sf::Vector2f position, ItemManager manager)
@@ -134,4 +135,9 @@ void Machine::render(sf::RenderWindow * window, sf::View view)
 void Machine::handleBaseInputs()
 {
 	this->transferItem();
+}
+
+int Machine::remove()
+{
+	return 3;
 }

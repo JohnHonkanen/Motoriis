@@ -146,7 +146,7 @@ void ConstructManager::removeLink()
 	if (!this->isConstructing)
 		return;
 	CLinked* remove = this->lastChecked;
-	int removeType = remove->construct->remove();
+	int removeType = remove->construct->main->remove();
 	if (removeType == 1) {
 		if (remove->next != NULL)
 			remove->next->prev = remove->prev;
@@ -171,6 +171,18 @@ void ConstructManager::removeLink()
 		}
 		this->checkPosition(head->construct->getPosition());
 		this->remove();
+	}
+	else if (removeType == 3) {
+		Machine *toRemoveMain = dynamic_cast<Machine*> (this->lastChecked->construct->main);
+		this->checkPosition(toRemoveMain->input1->getPosition());
+		this->remove();
+		this->checkPosition(toRemoveMain->input2->getPosition());
+		this->remove();
+		this->checkPosition(toRemoveMain->mainOutput->getPosition());
+		this->remove();
+		this->checkPosition(toRemoveMain->getPosition());
+		this->remove();
+		this->removeFromNetwork(toRemoveMain);
 	}
 	
 
@@ -299,7 +311,7 @@ void ConstructManager::buildConstruct(sf::Vector2f position, ItemManager manager
 			this->addNetwork(machine);
 		}
 		else if (this->construct == 4) {
-			construct = new EndConstruct(position);
+			construct = new EndConstruct(position, this->manager, this->economyManager);
 			this->addToList(construct);
 		}
 	}
@@ -333,6 +345,16 @@ sf::RectangleShape ConstructManager::drawHelper(sf::Vector2f position)
 		shape.setSize(sf::Vector2f(20, 30));
 
 	return shape;
+}
+
+void ConstructManager::addContractManager(ContractManager * manager)
+{
+	this->manager = manager;
+}
+
+void ConstructManager::addEconomyManager(EconomyManager * manager)
+{
+	this->economyManager = manager;
 }
 
 void ConstructManager::remove()

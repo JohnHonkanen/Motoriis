@@ -7,8 +7,8 @@
 #include "MenuManager.h"
 #include "ItemManager.h"
 #include "EconomyManager.h"
+#include "ContractManager.h"
 #include "Camera2D.h"
-#include "CsvParser.h"
 
 #pragma once
 class GameManager
@@ -33,9 +33,10 @@ private:
 	vector<Chunk> chunks;
 	InputEvents playerEvents;
 	ConstructManager constructManager;
-	MenuManager menuManager = MenuManager(&constructManager);
 	ItemManager itemManager;
 	EconomyManager economyManager;
+	ContractManager contractManager;
+	MenuManager menuManager;
 
 	int windowHeight;
 	int windowWidth;
@@ -48,7 +49,6 @@ private:
 
 	bool isPanning = false;
 	bool resetMovement = false;
-	CsvParser parser;
 	bool onButton = false;
 };
 
