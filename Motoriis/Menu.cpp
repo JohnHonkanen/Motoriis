@@ -11,6 +11,15 @@ Menu::~Menu()
 {
 }
 
+void Menu::draw(sf::RenderWindow * window, sf::View view)
+{
+	ButtonList *current = this->head;
+	while (current != NULL) {
+		current->button->draw(window, view);
+		current = current->next;
+	}
+}
+
 void Menu::addButtons(ButtonObjects *button)
 {
 	ButtonList *newNode = new ButtonList();

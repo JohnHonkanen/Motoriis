@@ -10,6 +10,5 @@ public:
 	sf::ConvexShape draw();
 	void calculatePointPosition();
 	void transferItem();
-	Construct* main;
 };
 

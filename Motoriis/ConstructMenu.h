@@ -1,17 +1,19 @@
 #pragma once
+#include "ConstructManager.h"
 #include "Menu.h"
 #include "Construct.h"
 #include "ConstructButton.h"
 class ConstructMenu : public Menu
 {
 public:
-	ConstructMenu();
+	ConstructMenu(ConstructManager *manager);
 	~ConstructMenu();
-	void draw(sf::RenderWindow *window, sf::View view);
 	bool onButton(sf::Vector2f position);
+	bool handleClicked();
 	int getActive();
 private:
 	int activeConstruct;
 	int state;
+	ConstructManager *manager;
 };
 

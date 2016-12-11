@@ -32,6 +32,7 @@ public:
 	Construct* left;
 	Construct* right;
 	Construct* mainOutput = this;
+	Construct* main;
 
 protected:
 	sf::Vector2f position;

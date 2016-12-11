@@ -12,6 +12,7 @@ OutputConstruct::OutputConstruct(sf::Vector2f position)
 	this->scale = 2.0f;
 	this->calculatePointPosition();
 	this->flow = 5;
+	this->main = this;
 }
 
 
@@ -20,10 +21,16 @@ OutputConstruct::~OutputConstruct()
 }
 
 void OutputConstruct::transferItem() {
+	if (!this->storage.hasItem())
+		return;
+
 	if (this->top != NULL) {
 		if (!this->top->storage.hasItem()) {
 			this->top->addItem(this->storage.getItem());
 			this->top->setFlow(1);
+			this->storage.getItem()->reduceAmount(1);
+			if (this->storage.getItem()->getAmount() <= 0)
+				this->storage.removeItem();
 		}
 		
 	}
@@ -31,6 +38,9 @@ void OutputConstruct::transferItem() {
 		if (!this->right->storage.hasItem()) {
 			this->right->addItem(this->storage.getItem());
 			this->right->setFlow(2);
+			this->storage.getItem()->reduceAmount(1);
+			if (this->storage.getItem()->getAmount() <= 0)
+				this->storage.removeItem();
 		}
 	}
 
@@ -38,6 +48,9 @@ void OutputConstruct::transferItem() {
 		if (!this->bottom->storage.hasItem()) {
 			this->bottom->addItem(this->storage.getItem());
 			this->bottom->setFlow(3);
+			this->storage.getItem()->reduceAmount(1);
+			if (this->storage.getItem()->getAmount() <= 0)
+				this->storage.removeItem();
 		}
 	}
 
@@ -45,6 +58,9 @@ void OutputConstruct::transferItem() {
 		if (!this->left->storage.hasItem()) {
 			this->left->addItem(this->storage.getItem());
 			this->left->setFlow(4);
+			this->storage.getItem()->reduceAmount(1);
+			if (this->storage.getItem()->getAmount() <= 0)
+				this->storage.removeItem();
 		}
 	}
 }

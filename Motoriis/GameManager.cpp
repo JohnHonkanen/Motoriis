@@ -20,14 +20,16 @@ bool GameManager::init() {
 	this->window->setView(view);
 	
 	Construct* outputBlue = new OutputConstruct(InputEvents::roundMousePos(800, 400));
-	outputBlue->addItem(&itemManager.findItem(0));
 	Construct* outputMilk = new OutputConstruct(InputEvents::roundMousePos(800, 420));
-	outputMilk->setFlow(5);
-	outputMilk->addItem(&itemManager.findItem(1));
 	this->constructManager.addToList(outputBlue);
 	this->constructManager.addToList(outputMilk);
 	this->constructManager.addNetwork(outputBlue);
 	this->constructManager.addNetwork(outputMilk);
+	Construct *inputs[2] = { outputBlue, outputMilk };
+	this->contractManager = ContractManager(&itemManager, &economyManager, inputs);
+	this->menuManager = MenuManager(&constructManager, &contractManager, &economyManager, inputs);
+	this->constructManager.addContractManager(&this->contractManager);
+	this->constructManager.addEconomyManager(&this->economyManager);
 	if (!window)
 		return false;
 	return true;
@@ -60,7 +62,7 @@ void GameManager::processInputs() {
 		//Normal Construction
 		if (playerEvents.getMouseHeld()) {
 			if (this->menuManager.intersectsButton(sf::Vector2f(mousePos.x, mousePos.y))) {
-				this->constructManager.setConstruct(dynamic_cast<ConstructMenu*>(this->menuManager.getFound())->getActive());
+				this->menuManager.getFound()->handleClicked();
 			} else{
 				if (this->constructManager.checkPosition(roundedPos) == NULL) {
 					this->constructManager.buildConstruct(roundedPos, this->itemManager);
@@ -248,6 +250,7 @@ void GameManager::render() {
 	if(this->constructManager.getConstructing())
 		window->draw(this->constructManager.drawHelper(InputEvents::roundMousePos(mousePos.x, mousePos.y)));
 	this->menuManager.render(window, camera2D.getView());
+	this->economyManager.render(window, camera2D.getView());
 	//End of Render Chunks
 	//Render GUI
 	window->display();

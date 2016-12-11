@@ -1,10 +1,14 @@
 #include "MenuManager.h"
 
-
-
 MenuManager::MenuManager()
+{ 
+}
+
+MenuManager::MenuManager(ConstructManager *cManager, ContractManager *ctManager, EconomyManager *eManager, Construct *inputs[])
 {
-	this->addMenu(new ConstructMenu());
+	this->addHeadMenu(new ConstructMenu(cManager));
+	this->addMenu(new EconomyMenu(ctManager));
+	this->addMenu(new ContractMenu(ctManager, eManager, inputs));
 }
 
 
@@ -26,14 +30,22 @@ void MenuManager::addMenu(Menu * menu)
 	MenuNodes *newNode = new MenuNodes();
 	newNode->menu = menu;
 
-	if (head == NULL) {
+	if (this->head == NULL) {
 		this->head = newNode;
 		this->tail = newNode;
 	}
 	else {
-		tail->next = newNode;
-		tail = tail->next;
+		this->tail->next = newNode;
+		this->tail = tail->next;
 	}
+}
+
+void MenuManager::addHeadMenu(Menu * menu)
+{
+	MenuNodes *newNode = new MenuNodes();
+	newNode->menu = menu;
+	this->head = newNode;
+	this->tail = newNode;
 }
 
 bool MenuManager::intersectsButton(sf::Vector2f position)

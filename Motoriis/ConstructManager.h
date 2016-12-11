@@ -39,6 +39,8 @@ public:
 	bool getConstructing();
 
 	sf::RectangleShape drawHelper(sf::Vector2f position);
+	void addContractManager(ContractManager *manager);
+	void addEconomyManager(EconomyManager *manager);
 private:
 	void remove();
 	sf::Clock clock;
@@ -53,5 +55,7 @@ private:
 	int count;
 	int construct = 1;
 	bool isConstructing = false;
+	ContractManager *manager;
+	EconomyManager *economyManager;
 };
 

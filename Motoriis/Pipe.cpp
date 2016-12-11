@@ -15,6 +15,7 @@ Pipe::Pipe(sf::Vector2f position) {
 	this->position = position;
 	this->scale = 2.0f;
 	this->calculatePointPosition();
+	this->main = this;
 }
 
 sf::ConvexShape Pipe::draw() {

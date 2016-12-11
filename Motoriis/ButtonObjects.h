@@ -15,5 +15,6 @@ protected:
 	sf::Vector2f position;
 	sf::RectangleShape rect;
 	sf::ConvexShape icon;
+	sf::Texture texture;
 };
 
