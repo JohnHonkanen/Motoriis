@@ -23,7 +23,9 @@ void ConstructNetwork::setTail()
 	visitedHead->construct = this->head->construct;
 	visitedHead->prev = NULL;
 	visitedHead->next = NULL;
-	this->calculatePath(this->head->construct->mainOutput, visitedHead, visitedHead);
+	if (this->head->construct->storage.hasItem()) {
+		this->calculatePath(this->head->construct->mainOutput, visitedHead, visitedHead);
+	}
 }
 
 Construct * ConstructNetwork::getHeadConstruct()

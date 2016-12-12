@@ -31,6 +31,8 @@ bool Construct::accepts() {
 	return this->acceptItems;
 }
 bool Construct::addItem(Item *item) {
+	if (item == NULL)
+		return false;
 	if (this->acceptItems && !this->storage.hasItem()) {
 		this->color = item->getColor();
 		this->storage.storeItem(item);
