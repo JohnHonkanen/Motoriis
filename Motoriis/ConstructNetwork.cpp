@@ -23,7 +23,9 @@ void ConstructNetwork::setTail()
 	visitedHead->construct = this->head->construct;
 	visitedHead->prev = NULL;
 	visitedHead->next = NULL;
-	this->calculatePath(this->head->construct->mainOutput, visitedHead, visitedHead);
+	if (this->head->construct->storage.hasItem()) {
+		this->calculatePath(this->head->construct->mainOutput, visitedHead, visitedHead);
+	}
 }
 
 Construct * ConstructNetwork::getHeadConstruct()
@@ -35,29 +37,28 @@ void ConstructNetwork::calculatePath(Construct *construct, CLinked *visitedHead,
 {
 	CLinked *newVisit = new CLinked();
 	if (construct->top != NULL && !this->checkVisits(construct->top, visitedHead)) {
-		newVisit->construct = construct->top;
-		newVisit->prev = visitedTail;
-		visitedTail->next = newVisit;
-		calculatePath(construct->top, visitedHead, visitedTail->next);
+			newVisit->construct = construct->top;
+			newVisit->prev = visitedTail;
+			visitedTail->next = newVisit;
+			calculatePath(construct->top, visitedHead, visitedTail->next);
 	}
 	if (construct->right != NULL && !this->checkVisits(construct->right, visitedHead)) {
-		newVisit->construct = construct->right;
-		newVisit->prev = visitedTail;
-		visitedTail->next = newVisit;
-		calculatePath(construct->right, visitedHead, visitedTail->next);
+			newVisit->construct = construct->right;
+			newVisit->prev = visitedTail;
+			visitedTail->next = newVisit;
+			calculatePath(construct->right, visitedHead, visitedTail->next);
 	}
 	if (construct->bottom != NULL && !this->checkVisits(construct->bottom, visitedHead)) {
-		newVisit->construct = construct->bottom;
-		newVisit->prev = visitedTail;
-		visitedTail->next = newVisit;
-		calculatePath(construct->bottom, visitedHead, visitedTail->next);
+			newVisit->construct = construct->bottom;
+			newVisit->prev = visitedTail;
+			visitedTail->next = newVisit;
+			calculatePath(construct->bottom, visitedHead, visitedTail->next);
 	}
 	if (construct->left != NULL && !this->checkVisits(construct->left, visitedHead)) {
-		newVisit->construct = construct->left;
-		newVisit->prev = visitedTail;
-		visitedTail->next = newVisit;
-		calculatePath(construct->left, visitedHead, visitedTail->next);
-			
+			newVisit->construct = construct->left;
+			newVisit->prev = visitedTail;
+			visitedTail->next = newVisit;
+			calculatePath(construct->left, visitedHead, visitedTail->next);	
 	}
 	update(construct, visitedTail->prev, this->head);
 }

@@ -16,7 +16,7 @@ ConstructMenu::ConstructMenu(ConstructManager *manager)
 	machineButton->setConstruct(3);
 	this->addButtons(machineButton);
 
-	ConstructButton *endButton = new ConstructButton(2.5f, "Texture/shipping.jpg");
+	ConstructButton *endButton = new ConstructButton(2.5f, "Texture/shipping_icon.jpg");
 	endButton->setConstruct(4);
 	this->addButtons(endButton);
 

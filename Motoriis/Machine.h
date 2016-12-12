@@ -1,6 +1,7 @@
 #pragma once
 #include "Construct.h"
 #include "BaseInput.h"
+#include <iostream>
 class Machine :
 	public Construct
 {

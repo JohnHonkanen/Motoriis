@@ -31,6 +31,8 @@ bool Construct::accepts() {
 	return this->acceptItems;
 }
 bool Construct::addItem(Item *item) {
+	if (item == NULL)
+		return false;
 	if (this->acceptItems && !this->storage.hasItem()) {
 		this->color = item->getColor();
 		this->storage.storeItem(item);
@@ -115,4 +117,14 @@ int Construct::getType()
 void Construct::setType(int type)
 {
 	this->type = type;
+}
+
+int Construct::getPrice()
+{
+	return this->price;
+}
+
+void Construct::setPrice(int price)
+{
+	this->price = price;
 }

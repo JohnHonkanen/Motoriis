@@ -1,5 +1,6 @@
 #pragma once
 #include "Contracts.h"
+#include "SFML\Audio.hpp"
 class BuyContracts :
 	public Contracts
 {
@@ -11,11 +12,10 @@ public:
 	~BuyContracts();
 	bool purchase();
 	void addToCurrent(int amount);
-	int getCurrent();
 	int getAdvancedPayment();
 private:
 	int payment;
 	int advancePayment;
-	int current = 0;
+	sf::Music success;
 };
 

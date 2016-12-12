@@ -12,7 +12,8 @@ EndConstruct::EndConstruct(sf::Vector2f position, ContractManager *contractManag
 	this->texture.loadFromFile("Texture/shipping.jpg");
 	this->contractManager = contractManager;
 	this->economyManager = economyManager;
-	this->main = main;
+	this->main = this;
+	this->price = 30;
 }
 
 
@@ -52,6 +53,7 @@ bool EndConstruct::addItem(Item * item)
 				== dynamic_cast<BuyContracts*> (this->contractManager->activeBuyContracts[0])->getCurrent()) {
 				dynamic_cast<BuyContracts*> (this->contractManager->activeBuyContracts[0])->fufill(this->economyManager);
 			}
+			return true;
 		}
 
 	} else if(this->contractManager->activeBuyContracts[1] != NULL && !this->contractManager->activeBuyContracts[1]->isComplete()){
@@ -61,7 +63,11 @@ bool EndConstruct::addItem(Item * item)
 				== dynamic_cast<BuyContracts*> (this->contractManager->activeBuyContracts[1])->getCurrent()) {
 				dynamic_cast<BuyContracts*> (this->contractManager->activeBuyContracts[1])->fufill(this->economyManager);
 			}
+			return true;
 		}
 	}
-	return true;
+	if (item == NULL)
+		return true;
+
+	return false;
 }

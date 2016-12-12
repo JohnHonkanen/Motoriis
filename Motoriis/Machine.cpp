@@ -21,6 +21,7 @@ Machine::Machine(sf::Vector2f position, ItemManager manager)
 	this->position = position;
 	this->manager = manager;
 	this->main = this;
+	this->price = 100;
 }
 
 Machine * Machine::makeMachine(sf::Vector2f position, ItemManager manager)
@@ -53,15 +54,11 @@ void Machine::transferItem()
 		return;
 	else {
 		Item *outputItem;
-		if(this->input1->storage.getItem()->getUID() == this->input2->storage.getItem()->getUID()) {
-			if(this->input1->storage.hasItem())
-				outputItem = this->input1->storage.getItem();
-			else
-				outputItem = this->input2->storage.getItem();
-		}
-		else {
-			outputItem = &this->manager.findItem(2); // BlueBerry Ice Cream
-		}
+		outputItem = &this->manager.findCompound(this->input1->storage.getItem()->getUID(), this->input2->storage.getItem()->getUID());
+		std::cout << outputItem->getUID() << std::endl;
+		if (outputItem == NULL)
+			return;
+
 		this->input1->storage.removeItem();
 		this->input2->storage.removeItem();
 		this->output->storage.removeItem();

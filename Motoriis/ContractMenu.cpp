@@ -2,6 +2,7 @@
 
 ContractMenu::ContractMenu(ContractManager * manager, EconomyManager *eManager, Construct *inputs[])
 {
+	this->success.openFromFile("Sounds/buy_1.wav");
 	this->manager = manager;
 	this->eManager = eManager;
 	this->inputs[0] = inputs[0];
@@ -43,9 +44,31 @@ void ContractMenu::draw(sf::RenderWindow * window, sf::View view)
 		text.setColor(sf::Color::White);
 		text.setScale(sf::Vector2f(0.1f, 0.1f));
 		text.setPosition(container.getPosition());
-
 		window->draw(container);
 		window->draw(text);
+		//Active Inputs
+		text.setString("1) TOP");
+		if (this->manager->getActiveInput() == 0)
+			text.setColor(sf::Color::Green);
+		else
+			text.setColor(sf::Color::White);
+		text.setPosition(container.getPosition() + sf::Vector2f(container.getSize().x *0.9f, 0));
+		window->draw(text);
+		text.setString("2) Bottom");
+		if (this->manager->getActiveInput() == 1)
+			text.setColor(sf::Color::Green);
+		else
+			text.setColor(sf::Color::White);
+		text.setPosition(text.getPosition() + sf::Vector2f(-container.getSize().x *0.05f, container.getSize().y * 0.05f));
+		window->draw(text);
+		//TIMER PART
+		text.setColor(sf::Color::White);
+		sf::Text timer("Renews in "+ std::to_string(this->manager->getSecondsLeft()) + " SECONDS", this->font, view.getSize().x *0.15f);
+		timer.setColor(sf::Color::White);
+		timer.setScale(sf::Vector2f(0.1f, 0.1f));
+		sf::FloatRect bounds = timer.getLocalBounds();
+		timer.setPosition(container.getPosition() + sf::Vector2f(container.getSize().x * 0.4f, 0));
+		window->draw(timer);
 		ButtonList *current = this->head;
 		while (current != NULL) {
 			current->button->draw(window, view);
@@ -70,18 +93,19 @@ bool ContractMenu::onButton(sf::Vector2f position)
 
 		current = current->next;
 	}
-	return true;
+	this->oButton = NULL;
+	return false;
 }
 
 bool ContractMenu::handleClicked()
 {
 	if (this->oButton->getContract()->getType() == 1) {
-		for (int i = 0; i < 2; i++) {
-			if (!this->inputs[i]->storage.hasItem()) {
-				this->oButton->getContract()->fufill(this->inputs[i], eManager);
-				return true;
-			}
+		if (!this->inputs[this->manager->getActiveInput()]->storage.hasItem()) {
+			this->oButton->getContract()->fufill(this->inputs[this->manager->getActiveInput()], eManager);
+			this->success.play();
+			return true;
 		}
+		
 	}
 	else {
 		std::cout << this->manager->activeBuyContracts[0] << std::endl;
@@ -92,13 +116,28 @@ bool ContractMenu::handleClicked()
 			this->oButton->getContract()->setActive(true);
 			this->manager->activeBuyContracts[0] = this->oButton->getContract();
 			this->eManager->addMoney(dynamic_cast<BuyContracts*>(this->oButton->getContract())->getAdvancedPayment());
+			this->success.play();
 		}
 		else if (!this->manager->activeBuyContracts[1]) {
 			this->oButton->getContract()->setActive(true);
 			this->manager->activeBuyContracts[1] = this->oButton->getContract();
 			this->eManager->addMoney(dynamic_cast<BuyContracts*>(this->oButton->getContract())->getAdvancedPayment());
+			this->success.play();
 		}
 	}
 	
 	return false;
+}
+
+void ContractMenu::update()
+{
+	ButtonList *current = this->head;
+	for (int i = 0; i < 3; i++) {
+	 	dynamic_cast<ContractButton*>(current->button)->update(this->manager->getBuy(i));
+		current = current->next;
+	}
+	for (int i = 0; i < 3; i++) {
+		dynamic_cast<ContractButton*>(current->button)->update(this->manager->getSell(i));
+		current = current->next;
+	}
 }
