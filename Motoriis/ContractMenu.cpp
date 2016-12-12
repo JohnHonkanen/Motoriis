@@ -93,7 +93,8 @@ bool ContractMenu::onButton(sf::Vector2f position)
 
 		current = current->next;
 	}
-	return true;
+	this->oButton = NULL;
+	return false;
 }
 
 bool ContractMenu::handleClicked()
