@@ -1,3 +1,4 @@
+#include "SFML\Audio.hpp"
 #include <vector>
 #include "ConstructNetwork.h"
 #include "Pipe.h"
@@ -57,5 +58,7 @@ private:
 	bool isConstructing = false;
 	ContractManager *manager;
 	EconomyManager *economyManager;
+	sf::Music blockPlaced;
+	sf::Music sellSound;
 };
 

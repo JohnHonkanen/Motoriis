@@ -18,7 +18,7 @@ Storage::~Storage()
 }
 
 void Storage::storeItem(Item *item) {
-	Item *newItem = new Item(item->getUID(), item->getName(), item->getType(), item->getSKU(), item->getColor());
+	Item *newItem = new Item(item->getUID(), item->getName(), item->getType(), item->getSKU(), item->getColor(), item->getBasePrice());
 	this->item = newItem;
 	this->containsItem = true;
 }

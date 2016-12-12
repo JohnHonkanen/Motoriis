@@ -21,45 +21,60 @@ void ContractButton::draw(sf::RenderWindow * window, sf::View view)
 	std::string rating;
 	switch (this->contract->getRating()) {
 	case 0:
-		rating = "A";
+		rating = "RANK A";
 		break;
 	case 1:
-		rating = "B";
+		rating = "RANK B";
 		break;
 	case 2:
-		rating = "C";
+		rating = "RANK C";
 		break;
 	default:
-		rating = "D";
+		rating = "RANK D";
 	}
 	if (this->yPos == 0)
 		rating += " BUY";
 	else
 		rating += " SELL";
 	sf::Text text(rating, this->font,view.getSize().x*0.1f);
-	text.setScale(sf::Vector2f(0.2f,0.2f));
+	text.setScale(sf::Vector2f(0.16f,0.16f));
 	text.setPosition(this->rect.getPosition());
 	window->draw(this->rect);
 	window->draw(text);
-	text.setString(std::to_string(this->contract->getItem().getAmount())+ " x " + this->contract->getItem().getName());
+	text.setString(this->contract->getItem().getName());
 	text.setPosition(text.getPosition() + sf::Vector2f(0, view.getSize().y*0.05f));
-	text.setScale(sf::Vector2f(0.08f, 0.08f));
+	text.setScale(sf::Vector2f(0.095f, 0.095f));
 	window->draw(text);
+	text.setString(std::to_string(this->contract->getItem().getAmount()));
+	text.setPosition(text.getPosition() + sf::Vector2f(view.getSize().x * 0.02f, view.getSize().y*0.05f));
+	text.setScale(sf::Vector2f(0.2f, 0.2f));
+	window->draw(text);
+	text.setString("Units");
+	text.setPosition(text.getPosition() + sf::Vector2f(view.getSize().x * 0.03f, view.getSize().y*0.05f));
+	text.setScale(sf::Vector2f(0.15f, 0.15f));
+	window->draw(text);
+	text.setScale(sf::Vector2f(0.1f, 0.1f));
 	if (this->contract->getActive()) {
 		if (this->contract->isComplete())
 			text.setString("Complete");
 		else
 		text.setString("ACTIVE");
-		text.setPosition(text.getPosition() + sf::Vector2f(0, view.getSize().y*0.1f));
+		text.setPosition(text.getPosition() + sf::Vector2f(-view.getSize().x * 0.04f, view.getSize().y*0.1f));
 		window->draw(text);
+
 	}
 	text.setString("$" + std::to_string(this->contract->getCost()));
-	text.setPosition(this->rect.getPosition().x + (this->rect.getSize().x * 0.75f) , this->rect.getPosition().y + (this->rect.getSize().y* 0.9f));
+	text.setPosition(this->rect.getPosition().x + (this->rect.getSize().x * 0.64f) , this->rect.getPosition().y + (this->rect.getSize().y* 0.9f));
 	window->draw(text);
 }
 
 void ContractButton::update()
 {
+}
+
+void ContractButton::update(Contracts *contract)
+{
+	this->contract = contract;
 }
 
 Contracts * ContractButton::getContract()

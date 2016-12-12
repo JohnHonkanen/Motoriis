@@ -4,6 +4,9 @@ GameManager::GameManager(int windowHeight, int windowWidth)
 {
 	this->windowHeight = windowHeight;
 	this->windowWidth = windowWidth;
+	this->mainMusic.openFromFile("Sounds/bg_main.wav");
+	this->logo.loadFromFile("Texture/logo.png");
+	this->font.loadFromFile("Fonts/Bungee-Regular.ttf");
 }
 
 
@@ -12,6 +15,9 @@ GameManager::~GameManager()
 }
 
 bool GameManager::init() {
+	this->mainMusic.setLoop(true);
+	this->mainMusic.play();
+	srand(time(NULL)); // SET RANDOM
 	int chunkSize = 150;
 	this->player = new Player(this->windowHeight / 2, this->windowWidth / 2);
 	this->chunks.push_back(Chunk(chunkSize, chunkSize, this->windowHeight / 2 - (chunkSize*10)/2, this->windowWidth / 2 - (chunkSize*10)/2));
@@ -20,7 +26,7 @@ bool GameManager::init() {
 	this->window->setView(view);
 	
 	Construct* outputBlue = new OutputConstruct(InputEvents::roundMousePos(800, 400));
-	Construct* outputMilk = new OutputConstruct(InputEvents::roundMousePos(800, 420));
+	Construct* outputMilk = new OutputConstruct(InputEvents::roundMousePos(800, 460));
 	this->constructManager.addToList(outputBlue);
 	this->constructManager.addToList(outputMilk);
 	this->constructManager.addNetwork(outputBlue);
@@ -61,6 +67,9 @@ void GameManager::processInputs() {
 		}
 		//Normal Construction
 		if (playerEvents.getMouseHeld()) {
+			if (!this->start)
+				this->start = true;
+
 			if (this->menuManager.intersectsButton(sf::Vector2f(mousePos.x, mousePos.y))) {
 				this->menuManager.getFound()->handleClicked();
 			} else{
@@ -117,10 +126,22 @@ void GameManager::processInputs() {
 				hori = 1;
 			}
 			//Constructing...
-			if (event.key.code == sf::Keyboard::Num1)
-				this->constructManager.setConstruct(1);
-			else if (event.key.code == sf::Keyboard::Num2)
-				this->constructManager.setConstruct(2);
+			if (event.key.code == sf::Keyboard::Num1) {
+				if (this->contractManager.getShowMenu()) {
+					this->contractManager.setActiveInput(0);//TOP
+				}else{
+					this->constructManager.setConstruct(1);
+				}
+				
+			}
+			else if (event.key.code == sf::Keyboard::Num2) {
+				if (this->contractManager.getShowMenu()) {
+					this->contractManager.setActiveInput(1);//BOTTOM
+				}
+				else {
+					this->constructManager.setConstruct(2);
+				}
+			}
 			else if (event.key.code == sf::Keyboard::Num3)
 				this->constructManager.setConstruct(3);
 			else if (event.key.code == sf::Keyboard::Num4)
@@ -153,35 +174,37 @@ void GameManager::processInputs() {
 		}
 		//EndOfKeyboard
 
-		//Pan Mouse Start
+		if (!this->menuManager.intersectsButton(sf::Vector2f(mousePos.x, mousePos.y))) {
+			//Pan Mouse Start
+			if (this->mousePos.x < camera2D.getView().getCenter().x - (camera2D.getView().getSize().x / 2) + 10) {
+				hori = -1;
+				isPanning = true;
+				resetMovement = false;
+			}
+			else if (this->mousePos.x > camera2D.getView().getCenter().x + (camera2D.getView().getSize().x / 2) - 10) {
+				hori = 1;
+				isPanning = true;
+				resetMovement = false;
+			}
+			else {
+				isPanning = false;
+			}
 
-		if (this->mousePos.x < camera2D.getView().getCenter().x - (camera2D.getView().getSize().x / 2) + 10) {
-			hori = -1;
-			isPanning = true;
-			resetMovement = false;
+			if (this->mousePos.y < camera2D.getView().getCenter().y - (camera2D.getView().getSize().y / 2) + 10) {
+				vert = -1;
+				isPanning = true;
+				resetMovement = false;
+			}
+			else if (this->mousePos.y > camera2D.getView().getCenter().y + (camera2D.getView().getSize().y / 2) - 10) {
+				vert = 1;
+				isPanning = true;
+				resetMovement = false;
+			}
+			else {
+				isPanning = false;
+			}
 		}
-		else if (this->mousePos.x > camera2D.getView().getCenter().x + (camera2D.getView().getSize().x / 2) - 10) {
-			hori = 1;
-			isPanning = true;
-			resetMovement = false;
-		}
-		else {
-			isPanning = false;
-		}
-
-		if (this->mousePos.y < camera2D.getView().getCenter().y - (camera2D.getView().getSize().y / 2) + 10) {
-			vert = -1;
-			isPanning = true;
-			resetMovement = false;
-		}
-		else if (this->mousePos.y > camera2D.getView().getCenter().y + (camera2D.getView().getSize().y / 2) - 10) {
-			vert = 1;
-			isPanning = true;
-			resetMovement = false;
-		}
-		else {
-			isPanning = false;
-		}
+		
 
 		if (!resetMovement && !isPanning) {
 			resetMovement = true;
@@ -220,12 +243,23 @@ void GameManager::processInputs() {
 }
 
 void GameManager::update() {
-	camera2D.moveCamera(hori, vert);
-	this->constructManager.update();
+	if (this->start) {
+		camera2D.moveCamera(hori, vert);
+		this->menuManager.update();
+		this->constructManager.update();
+		this->contractManager.update();
+		if (this->economyManager.getMoney() < -2000) {
+			this->window->close();
+			this->closeState = 1;
+			return;
+		}
+			
+	}
+	
 }
 
 void GameManager::mainLoop() {
-	window->setFramerateLimit(60);
+	window->setFramerateLimit(30);
 	while (window->isOpen()) {
 		this->processInputs();
 		this->update();
@@ -235,22 +269,47 @@ void GameManager::mainLoop() {
 
 void GameManager::render() {
 
+
 	window->setView(this->camera2D.view);
 	window->clear();
-	//Render our chunks
-	vector<Chunk>::iterator it;
-	int chunk = 0;
-	for (it = chunks.begin(); it < chunks.end(); it++, chunk++) {
-		chunks.at(chunk).render(window);
+	if (this->start) {
+		//Render our chunks
+		vector<Chunk>::iterator it;
+		int chunk = 0;
+		for (it = chunks.begin(); it < chunks.end(); it++, chunk++) {
+			chunks.at(chunk).render(window);
+		}
+		if (playerEvents.getMouseDrag()) {
+			window->draw(playerEvents.getOverlay());
+		}
+		this->constructManager.render(window, camera2D.getView());
+		if (this->constructManager.getConstructing())
+			window->draw(this->constructManager.drawHelper(InputEvents::roundMousePos(mousePos.x, mousePos.y)));
+		this->contractManager.render(window, camera2D.getView());
+		this->menuManager.render(window, camera2D.getView());
+		this->economyManager.render(window, camera2D.getView());
 	}
-	if (playerEvents.getMouseDrag()) {
-		window->draw(playerEvents.getOverlay());
+	else {
+		sf::RectangleShape shape;
+		shape.setPosition(camera2D.getView().getCenter() - sf::Vector2f(camera2D.getView().getSize().x*0.2, camera2D.getView().getSize().y*0.2f));
+		shape.setTexture(&this->logo, false);
+		shape.setSize(sf::Vector2f(camera2D.getView().getSize().x*0.4, camera2D.getView().getSize().y*0.1));
+		window->draw(shape);
+		sf::Text text("Click anywhere to Start!", this->font, view.getSize().x*0.05f);
+		text.setScale(sf::Vector2f(0.2f, 0.2f));
+		text.setPosition(camera2D.getView().getCenter() - sf::Vector2f(camera2D.getView().getSize().x * 0.19f, 0));
+		window->draw(text);
+		text.setString("Developed by Globobyte Studios, All Rights Reserved © 2016");
+		text.setPosition(camera2D.getView().getCenter() + sf::Vector2f(-camera2D.getView().getSize().x * 0.27f, camera2D.getView().getSize().y*0.4f));
+		text.setCharacterSize(view.getSize().x*0.03f);
+		window->draw(text);
+		text.setString("Tech Demo");
+		text.setPosition(camera2D.getView().getCenter() + sf::Vector2f(camera2D.getView().getSize().x * 0.16f, -camera2D.getView().getSize().y*0.09f));
+		text.setCharacterSize(view.getSize().x*0.02f);
+		window->draw(text);
 	}
-	this->constructManager.render(window, camera2D.getView());
-	if(this->constructManager.getConstructing())
-		window->draw(this->constructManager.drawHelper(InputEvents::roundMousePos(mousePos.x, mousePos.y)));
-	this->menuManager.render(window, camera2D.getView());
-	this->economyManager.render(window, camera2D.getView());
+	
+	
 	//End of Render Chunks
 	//Render GUI
 	window->display();

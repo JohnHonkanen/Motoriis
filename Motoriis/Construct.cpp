@@ -116,3 +116,13 @@ void Construct::setType(int type)
 {
 	this->type = type;
 }
+
+int Construct::getPrice()
+{
+	return this->price;
+}
+
+void Construct::setPrice(int price)
+{
+	this->price = price;
+}

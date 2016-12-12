@@ -25,6 +25,15 @@ void MenuManager::render(sf::RenderWindow * window, sf::View view)
 	}
 }
 
+void MenuManager::update()
+{
+	MenuNodes *current = this->head;
+	while (current != NULL) {
+		current->menu->update();
+		current = current->next;
+	}
+}
+
 void MenuManager::addMenu(Menu * menu)
 {
 	MenuNodes *newNode = new MenuNodes();

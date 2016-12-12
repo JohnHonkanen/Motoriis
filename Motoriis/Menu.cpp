@@ -20,6 +20,10 @@ void Menu::draw(sf::RenderWindow * window, sf::View view)
 	}
 }
 
+void Menu::update()
+{
+}
+
 void Menu::addButtons(ButtonObjects *button)
 {
 	ButtonList *newNode = new ButtonList();

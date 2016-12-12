@@ -8,8 +8,9 @@ public:
 	bool init();
 	bool addItem(Item item);
 	Item findItem(int id);
+	Item findCompound(int id1, int id2);
 private:
 	int numItems;
-	Item item[3];
+	Item item[9];
 };
 

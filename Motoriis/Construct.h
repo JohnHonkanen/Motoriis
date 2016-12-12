@@ -34,6 +34,9 @@ public:
 	Construct* mainOutput = this;
 	Construct* main;
 
+	int getPrice();
+	void setPrice(int price);
+
 protected:
 	sf::Vector2f position;
 	vector<sf::Vector2f> points;
@@ -44,5 +47,6 @@ protected:
 	bool acceptItems = true;
 	int type = 0; //OUTPUT OR INPUT 
 	sf::Texture texture;
+	int price = 0;
 };
 

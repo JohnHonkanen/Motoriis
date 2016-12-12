@@ -18,6 +18,7 @@ StorageConstruct::StorageConstruct(sf::Vector2f position)
 	this->states[1].loadFromFile("Texture/storage_2.png");
 	this->states[2].loadFromFile("Texture/storage_3.png");
 	this->states[3].loadFromFile("Texture/storage_4.png");
+	this->price = 50;
 }
 
 
@@ -110,7 +111,8 @@ void StorageConstruct::calculatePointPosition()
 
 void StorageConstruct::transferItem()
 {
-	Construct *output = findOutput(this->head);
+	Construct *output = NULL;
+	output = findOutput(this->head);
 	if (output != NULL)
 		this->transferItem(this->head, output);
 }

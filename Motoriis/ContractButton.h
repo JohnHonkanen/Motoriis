@@ -9,6 +9,7 @@ public:
 	~ContractButton();
 	void draw(sf::RenderWindow *window, sf::View view);
 	void update();
+	void update(Contracts *contract);
 	Contracts *getContract();
 private:
 	void createRect(sf::View view);

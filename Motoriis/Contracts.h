@@ -17,6 +17,7 @@ public:
 	bool getActive();
 	void setActive(bool active);
 	bool isComplete();
+	int getCurrent();
 protected:
 	Item item;
 	int cost;
@@ -25,5 +26,6 @@ protected:
 	bool active = false;
 	bool complete = false;
 	sf::Time time;
+	int current = 0;
 };
 

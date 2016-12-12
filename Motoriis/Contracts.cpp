@@ -45,3 +45,8 @@ bool Contracts::isComplete()
 {
 	return this->complete;
 }
+
+int Contracts::getCurrent()
+{
+	return this->current;
+}

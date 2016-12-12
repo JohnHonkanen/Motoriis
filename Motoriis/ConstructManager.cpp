@@ -4,6 +4,8 @@
 ConstructManager::ConstructManager()
 {
 	int count = 0;
+	this->blockPlaced.openFromFile("Sounds/block.wav");
+	this->sellSound.openFromFile("Sounds/buy_1.wav");
 }
 
 ConstructManager::~ConstructManager()
@@ -99,7 +101,7 @@ void ConstructManager::update() {
 		return;
 
 	elasped = clock.getElapsedTime();
-	if (elasped.asSeconds() > 0.5f) {
+	if (elasped.asSeconds() > 1.0f) {
 		this->runNetwork(this->nHead);
 		clock.restart();
 	}
@@ -145,9 +147,11 @@ void ConstructManager::removeLink()
 {
 	if (!this->isConstructing)
 		return;
+	this->sellSound.play();
 	CLinked* remove = this->lastChecked;
 	int removeType = remove->construct->main->remove();
 	if (removeType == 1) {
+		this->economyManager->addMoney(10*0.9f);
 		if (remove->next != NULL)
 			remove->next->prev = remove->prev;
 
@@ -160,6 +164,7 @@ void ConstructManager::removeLink()
 		delete remove;
 	}
 	else if (removeType == 2) {
+		this->economyManager->addMoney(remove->construct->main->getPrice()*0.9f);
 		StorageConstruct* construct = dynamic_cast<StorageConstruct*>(remove->construct);
 		LinkedStorage* head = construct->getHead();
 		this->removeFromNetwork(head->construct);
@@ -173,6 +178,7 @@ void ConstructManager::removeLink()
 		this->remove();
 	}
 	else if (removeType == 3) {
+		this->economyManager->addMoney(remove->construct->main->getPrice()*0.9f);
 		Machine *toRemoveMain = dynamic_cast<Machine*> (this->lastChecked->construct->main);
 		this->checkPosition(toRemoveMain->input1->getPosition());
 		this->remove();
@@ -281,6 +287,7 @@ void ConstructManager::addStorageConstruct(sf::Vector2f position)
 	this->addToList(leftBottom);
 	this->addToList(rightBottom);
 	this->addNetwork(left);
+	this->economyManager->reduceMoney(left->getPrice());
 }
 
 void ConstructManager::setConstruct(int construct)
@@ -297,6 +304,7 @@ void ConstructManager::buildConstruct(sf::Vector2f position, ItemManager manager
 		Construct* construct;
 		if (this->construct == 1) {
 			construct = new Pipe(position);
+			this->economyManager->reduceMoney(construct->getPrice());
 			this->addToList(construct);
 		}
 		else if (this->construct == 2) {
@@ -309,13 +317,16 @@ void ConstructManager::buildConstruct(sf::Vector2f position, ItemManager manager
 			this->addToList(dynamic_cast<Machine*>(machine)->input2);
 			this->addToList(dynamic_cast<Machine*>(machine)->output);
 			this->addNetwork(machine);
+			this->economyManager->reduceMoney(machine->getPrice());
 		}
 		else if (this->construct == 4) {
 			construct = new EndConstruct(position, this->manager, this->economyManager);
 			this->addToList(construct);
+			this->economyManager->reduceMoney(construct->getPrice());
 		}
 	}
 	
+	this->blockPlaced.play();
 }
 
 void ConstructManager::setConstructing(bool value)

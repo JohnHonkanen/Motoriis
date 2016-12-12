@@ -8,6 +8,7 @@ BuyContracts::BuyContracts()
 
 BuyContracts::BuyContracts(Item item, int rating, int payment, int advance)
 {
+	this->success.openFromFile("Sounds/buy_2.wav");
 	this->item = item;
 	this->rating = rating;
 	this->cost = payment;
@@ -24,6 +25,7 @@ bool BuyContracts::fufill(EconomyManager* manager)
 {
 	manager->addMoney(this->cost);
 	this->complete = true;
+	this->success.play();
 	return true;
 }
 
@@ -40,11 +42,6 @@ bool BuyContracts::purchase()
 void BuyContracts::addToCurrent(int amount)
 {
 	this->current += amount;
-}
-
-int BuyContracts::getCurrent()
-{
-	return this->current;
 }
 
 int BuyContracts::getAdvancedPayment()

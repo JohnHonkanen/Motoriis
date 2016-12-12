@@ -1,5 +1,6 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include "InputEvents.h"
 #include "Player.h"
 #include "Chunk.h"
@@ -17,6 +18,7 @@ public:
 	GameManager(int windowHeight, int windowWidth);
 	~GameManager();
 	void run();
+	int closeState = 0;
 private:
 	bool init();
 	void render();
@@ -50,5 +52,11 @@ private:
 	bool isPanning = false;
 	bool resetMovement = false;
 	bool onButton = false;
+
+	sf::Music mainMusic;
+	sf::RectangleShape logoRect;
+	sf::Texture logo;
+	sf::Font font;
+	bool start = false;
 };
 

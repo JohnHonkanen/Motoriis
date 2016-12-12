@@ -3,7 +3,7 @@
 Item::Item() {
 
 }
-Item::Item(int uid, string name, int type, string sku, sf::Color color)
+Item::Item(int uid, string name, int type, string sku, sf::Color color, int basePrice)
 {
 	this->uid = uid;
 	this->name = name;
@@ -11,6 +11,7 @@ Item::Item(int uid, string name, int type, string sku, sf::Color color)
 	this->sku = sku;
 	this->color = color;
 	this->amount = 1;
+	this->basePrice = basePrice;
 }
 
 
@@ -53,4 +54,36 @@ void Item::reduceAmount(int amount) {
 
 void Item::setAmount(int amount) {
 	this->amount = amount;
+}
+
+int Item::getBasePrice()
+{
+	return this->basePrice;
+}
+
+bool Item::isCompound()
+{
+	return this->compoundItem;
+}
+
+void Item::makeCompound(int item1, int item2)
+{
+	this->compoundItem = true;
+	this->item1Id = item1;
+	this->item2Id = item2;
+}
+
+int Item::getItem1Id()
+{
+	return this->item1Id;
+}
+
+int Item::getItem2Id()
+{
+	return this->item2Id;
+}
+
+void Item::changeModifier(float modifier)
+{
+	this->modifier = modifier;
 }

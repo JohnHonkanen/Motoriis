@@ -6,7 +6,7 @@ EconomyManager::EconomyManager()
 {
 	this->font.loadFromFile("Fonts/Bungee-Regular.ttf");
 	this->goldTexture.loadFromFile("Texture/gold.png");
-	this->money = 1000;
+	this->money = 3000;
 }
 
 
@@ -34,7 +34,11 @@ void EconomyManager::render(sf::RenderWindow *window, sf::View view)
 	sf::String money;
 	money = std::to_string(this->getMoney());
 	sf::Text text(money, this->font,view.getSize().x/5);
-	text.setColor(sf::Color::White);
+	if (this->money < 0) {
+		text.setColor(sf::Color::Red);
+	}
+	else
+		text.setColor(sf::Color::White);
 	text.setScale(sf::Vector2f(0.1f,0.1f));
 	float positionX = view.getCenter().x - view.getSize().x / 2;
 	float positionY = view.getCenter().y - view.getSize().y / 2;

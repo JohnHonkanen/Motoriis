@@ -72,46 +72,12 @@ int OutputConstruct::remove()
 
 void OutputConstruct::calculatePointPosition() {
 	this->points.clear();
-	this->pointCount = 0;
-	if (this->top != NULL)
-	{
-		this->points.push_back(this->position + sf::Vector2f(2.0f, 0.0f));
-		this->points.push_back(this->position + sf::Vector2f(8.0f, 0.0f));
-		this->pointCount += 2;
-	}
-	else {
-		this->points.push_back(this->position + sf::Vector2f(2.0f, 2.0f));
-		this->points.push_back(this->position + sf::Vector2f(8.0f, 2.0f));
-		this->pointCount += 2;
-	}
-	if (this->right != NULL) {
-		this->points.push_back(this->position + sf::Vector2f(8.0f, 2.0f));
-		this->points.push_back(this->position + sf::Vector2f(10.0f, 2.0f));
-		this->points.push_back(this->position + sf::Vector2f(10.0f, 8.0f));
-		this->points.push_back(this->position + sf::Vector2f(8.0f, 8.0f));
-		this->pointCount += 4;
-	}
+	this->pointCount = 4;
 
-	if (this->bottom != NULL)
-	{
-		this->points.push_back(this->position + sf::Vector2f(8.0f, 10.0f));
-		this->points.push_back(this->position + sf::Vector2f(2.0f, 10.0f));
-		this->pointCount += 2;
-	}
-	else {
-		this->points.push_back(this->position + sf::Vector2f(8.0f, 8.0f));
-		this->points.push_back(this->position + sf::Vector2f(2.0f, 8.0f));
-		this->pointCount += 2;
-	}
-
-	if (this->left != NULL) {
-		this->points.push_back(this->position + sf::Vector2f(2.0f, 8.0f));
-		this->points.push_back(this->position + sf::Vector2f(0.0f, 8.0f));
-		this->points.push_back(this->position + sf::Vector2f(0.0f, 2.0f));
-		this->points.push_back(this->position + sf::Vector2f(2.0f, 2.0f));
-
-		this->pointCount += 4;
-	}
+	this->points.push_back(this->position + sf::Vector2f(0.0f, 0.0f));
+	this->points.push_back(this->position + sf::Vector2f(0.0f, 10.0f));
+	this->points.push_back(this->position + sf::Vector2f(10.0f, 10.0f));
+	this->points.push_back(this->position + sf::Vector2f(10.0f, 0.0f));
 }
 
 sf::ConvexShape OutputConstruct::draw() {
@@ -124,13 +90,13 @@ sf::ConvexShape OutputConstruct::draw() {
 	}
 	//Draw Shape
 	if (this->storage.hasItem()) {
-		shape.setFillColor(this->color);
+		shape.setFillColor(this->storage.getItem()->getColor());
 	}
 	else {
 		shape.setFillColor(sf::Color::Transparent);
 	}
 	
-	shape.setOutlineColor(sf::Color::Black);
+	shape.setOutlineColor(sf::Color(255, 55, 0));
 	shape.setOutlineThickness(-1.0f);
 
 
