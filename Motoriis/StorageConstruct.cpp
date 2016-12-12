@@ -110,9 +110,8 @@ void StorageConstruct::calculatePointPosition()
 }
 
 void StorageConstruct::transferItem()
-{
-	Construct *output = NULL;
-	output = findOutput(this->head);
+{ 
+	Construct *output = findOutput(this->head);
 	if (output != NULL)
 		this->transferItem(this->head, output);
 }
@@ -171,20 +170,17 @@ void StorageConstruct::transferItem(LinkedStorage * current, Construct *output)
 			}
 		}
 	}
-	else {
-		this->transferItem(current->next, output);
-	}
+	this->transferItem(current->next, output);
 }
 
 Construct* StorageConstruct::findOutput(LinkedStorage * current)
 {
-	if (current == NULL)
-		return NULL;
+	return current->construct->mainOutput;
+}
 
-	if (current->construct->getType() == 2) {
-		return current->construct;
-	}
-	findOutput(current->next);
+void StorageConstruct::setOutput(Construct * output)
+{
+	this->mainOutput = output;
 }
 
 bool StorageConstruct::accepting()

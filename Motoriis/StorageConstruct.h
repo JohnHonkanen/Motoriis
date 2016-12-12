@@ -21,6 +21,7 @@ public:
 	void transferItem();
 	void transferItem(LinkedStorage *current, Construct *output);
 	Construct *findOutput(LinkedStorage *current);
+	void setOutput(Construct *output);
 	bool accepting();
 	bool accepting(LinkedStorage *current);
 	void setHead(LinkedStorage* head);

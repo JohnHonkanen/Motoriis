@@ -280,6 +280,7 @@ void ConstructManager::addStorageConstruct(sf::Vector2f position)
 	leftBottom->setHead(head);
 	rightBottom->setHead(head);
 	rightBottom->setType(2);
+	left->setOutput(rightBottom);
 
 
 	this->addToList(left);
